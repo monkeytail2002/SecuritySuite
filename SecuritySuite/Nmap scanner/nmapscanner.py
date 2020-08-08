@@ -30,7 +30,9 @@ class Portscan(Scanning):
 					print('port: %s\tstate: %s' % (port, nmScan[host][proto][port]['state']))
 
 
-#input the test ip address and port range
-testing = Portscan('127.0.0.1','21-443')
+#input the test ip address and port range using user input
+userIP = input("Please enter your IP range:\n")
+userPort = input("Please enter your port range:\n")
+testing = Portscan(userIP,userPort)
 #run the port scan
 testing.results()
