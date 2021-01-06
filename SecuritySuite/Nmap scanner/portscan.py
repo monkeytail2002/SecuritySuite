@@ -38,12 +38,15 @@ class Stealthscan(Scanning):
                 scannedPorts = scanner[host][proto].keys()
                 for port in scannedPorts:
                     print('Port: %s\tState: %s' % (port,scanner[host][proto][port]['state']))
+                    print('Name: %s' % (scanner[host][proto][port]['name']))
 
 #Set the UDP scan
 class UDPScan(Scanning):
     def results(self):
-        test = scanner.scan(self.ipaddress,self.ports,arguments='-sU')
-        print(test)
+        scanner.scan(self.ipaddress,self.ports,arguments='-sU')
+        hostRange = scanner.all_hosts()
+        for host in hostRange:
+            print('Host: %s (%s)' %(host,scanner[host].hostname()))
 
 #Set the SCTP scan
 class Sigtran(Scanning):
