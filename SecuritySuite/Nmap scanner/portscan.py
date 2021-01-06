@@ -47,6 +47,8 @@ class UDPScan(Scanning):
         hostRange = scanner.all_hosts()
         for host in hostRange:
             print('Host: %s (%s)' %(host,scanner[host].hostname()))
+            
+
 
 #Set the SCTP scan
 class Sigtran(Scanning):
@@ -68,25 +70,32 @@ class Sigtran(Scanning):
 #Set the Null scan
 class Nullscan(Scanning):
     def results(self):
-        scanner.scan(self.ipaddress,self.ports,arguments='-sU')
+        scanner.scan(self.ipaddress,self.ports,arguments='-sN')
         hostRange = scanner.all_hosts()
         for host in hostRange:
             print('Host: %s (%s)' %(host,scanner[host].hostname()))
 
 #Set the Fin scan
-class Nullscan(Scanning):
+class Finnscan(Scanning):
     def results(self):
-        scanner.scan(self.ipaddress,self.ports,arguments='-sU')
+        scanner.scan(self.ipaddress,self.ports,arguments='-sF')
+        hostRange = scanner.all_hosts()
+        for host in hostRange:
+            print('Host: %s (%s)' %(host,scanner[host].hostname()))
+            for proto in scanner[host].all_protocols():
+                print('Protocol: %s' % proto)
+                scannedPorts = scanner[host][proto].keys()
+                for port in scannedPorts:
+                    print('Port: %s\tState: %s' % (port,scanner[host][proto][port]['state']))
+
+#Set teh Xmas scan
+class Xmasscan(Scanning):
+    def results(self):
+        scanner.scan(self.ipaddress,self.ports,arguments='-sX')
         hostRange = scanner.all_hosts()
         for host in hostRange:
             print('Host: %s (%s)' %(host,scanner[host].hostname()))
 
-        
-#Set teh Xmas scan
-class Xmasscan(Scanning):
-    def results(self):
-        test = scanner.scan(self.ipaddress,self.ports,arguments='-sX')
-        print(test)
 
 #Set the TCP/ACK scan
 class TCPAckscan(Scanning):
@@ -103,5 +112,15 @@ class Cookiescan(Scanning):
 #Set IP Scan
 class IPscan(Scanning):
     def results(self):
-        test = scanner.scan(self.ipaddress,self.ports,arguments='-sO')
-        print(test)
+        scanner.scan(self.ipaddress,self.ports,arguments='-sO')
+        hostRange = scanner.all_hosts()
+        for host in hostRange:
+            print('Host: %s (%s)' %(host,scanner[host].hostname()))
+            for proto in scanner[host].all_protocols():
+                print('Protocol: %s' % proto)
+                scannedPorts = scanner[host][proto].keys()
+                for port in scannedPorts:
+                    print('Port: %s\t Name: %s' % (port,scanner[host][proto][port]['state']))
+                    print('State|Reason: %s|%s' % (scanner[host][proto][port]['state'],scanner[host][proto][port]['reason']))
+                    print('Product: %s\tVersion: %s' % (scanner[host][proto][port]['product'],scanner[host][proto][port]['version']))
+                    print('Extra Info: %s' % (scanner[host][proto][port]['extrainfo']))
