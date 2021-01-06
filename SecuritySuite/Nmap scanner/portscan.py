@@ -68,14 +68,18 @@ class Sigtran(Scanning):
 #Set the Null scan
 class Nullscan(Scanning):
     def results(self):
-        test = scanner.scan(self.ipaddress,self.ports,arguments='-sN')
-        print(test)
+        scanner.scan(self.ipaddress,self.ports,arguments='-sU')
+        hostRange = scanner.all_hosts()
+        for host in hostRange:
+            print('Host: %s (%s)' %(host,scanner[host].hostname()))
 
 #Set the Fin scan
-class Finnscan(Scanning):
+class Nullscan(Scanning):
     def results(self):
-        test = scanner.scan(self.ipaddress,self.ports,arguments='-sF')
-        print(test)
+        scanner.scan(self.ipaddress,self.ports,arguments='-sU')
+        hostRange = scanner.all_hosts()
+        for host in hostRange:
+            print('Host: %s (%s)' %(host,scanner[host].hostname()))
 
         
 #Set teh Xmas scan
