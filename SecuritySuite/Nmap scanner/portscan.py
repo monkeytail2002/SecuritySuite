@@ -51,8 +51,19 @@ class UDPScan(Scanning):
 #Set the SCTP scan
 class Sigtran(Scanning):
     def results(self):
-        test = scanner.scan(self.ipaddress,self.ports,arguments='-sY')
-        print(test)
+        scanner.scan(self.ipaddress,self.ports,arguments='-sS')
+        hostRange = scanner.all_hosts()
+        for host in hostRange:
+            print('Host: %s (%s)' %(host,scanner[host].hostname()))
+            for proto in scanner[host].all_protocols():
+                print('Protocol: %s' % proto)
+                scannedPorts = scanner[host][proto].keys()
+                for port in scannedPorts:
+                    print('Port: %s\tState: %s' % (port,scanner[host][proto][port]['state']))
+                    print('Product: %s\tVersion: %s' % (scanner[host][proto][port]['product'],scanner[host][proto][port]['version']))
+                    print('Name: %s' % (scanner[host][proto][port]['name']))
+                    print('Extra Info: %s' % (scanner[host][proto][port]['extrainfo']))
+                    print('Reason: %s' % (scanner[host][proto][port]['reason']))
 
 #Set the Null scan
 class Nullscan(Scanning):
