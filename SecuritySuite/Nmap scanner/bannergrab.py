@@ -5,7 +5,7 @@ class Bannergrab(Scanning):
 		#set the scan to return the host
 		hostRange = scanner.all_hosts()
         for host in hostRange:
-			print('Target: %s (%s)' % (host, scanner[host].hostname()))
+            print('Target: %s (%s)' % (host, scanner[host].hostname()))
             #return the information from the banner by port
             for proto in scanner[host].all_protocols():
                 print('Protocol: %s' % proto)
