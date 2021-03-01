@@ -1,0 +1,79 @@
+<!--
+<?php require_once('config.php'); ?>
+<?php require_once( ROOT_PATH . '/includes/head_section.php'); ?>
+-->
+
+
+<!--
+<?php
+	if($_SESSION['Valid']){
+	} else {
+		header("Location:index.php");
+	} ?>
+-->
+<html>
+	<head>
+		<title>Security Suite</title>
+	</head>
+	<body>
+		<div class="container">
+			
+<!--			<?php include( ROOT_PATH . '/includes/navbar.php'); ?>-->
+			<h1><center>Security Suite</center></h1>
+			<br><br>
+			<h2><center>Select a tool</center></h2>
+			
+			<form action="main.php" method="post">
+				Tools: <select name="tools" id="tools">
+				<option value="" selected="selected">Select tool</option>
+				</select>
+				<br><br>
+				Scan Type: <select name="scan" id="scan">
+				<option value="" selected ="selected">Select scan</option>
+				</select>
+				<br><br>
+				Scan Options: <select name="options" id="options">
+				<option value="" selected ="selected">Select option</option>
+				</select>
+				<br><br>
+				<input type="submit" value="Submit">
+				
+			</form>		
+		</div>
+	</body>
+	<script>
+		var toolObject = {
+			"Nmap": {
+				"Port": ["TCP", "TCP Syn", "UDP","SCTP","Null","Fin","Xmas","TCP/ACK","Advanced SCTP","IP"],
+				"Banner Grab": ["Banner Grab", "Vulnerabilty Scan"],
+				"Version Detection": ["Version detection - Intensity 0","Version detection - Intensity 1","Version detection - Intensity 2","Version detection - Intensity 3","Version detection - Intensity 4","Version detection - Intensity 5","Version detection - Intensity 6","Version detection - Intensity 7","Version detection - Intensity 8","Version detection - Intensity 9" ],
+				"Operating System": ["Limited","Guess","Max tries - 1","Max tries - 2","Max tries - 3","Max tries - 4","Max tries - 5"],
+				"NSE Scripts":["http-auth-finder","http-auth","http-enum","http-methods","http-sitemap-generator"]
+				}
+		}
+		
+		window.onload = function() {
+			var toolSel = document.getElementById("tools");
+			var scanSel = document.getElementById("scan");
+			var typeSel = document.getElementById("options");
+			for (var x in toolObject){
+				toolSel.options[toolSel.options.length] = new Option(x, x);
+			}
+			toolSel.onchange = function() {
+				scanSel.length = 1;
+				typeSel.length = 1;
+				for (var y in toolObject[this.value]){
+					scanSel.options[scanSel.options.length] = new Option(y, y);
+				}
+			}
+			scanSel.onchange = function() {
+				typeSel.length = 1;
+				var z = toolObject[toolSel.value][this.value];
+				for (var i = 0; i < z.length; i++){
+					typeSel.options[typeSel.options.length] = new Option(z[i], z[i]);
+				}
+			}
+		}
+	</script>
+
+</html>
