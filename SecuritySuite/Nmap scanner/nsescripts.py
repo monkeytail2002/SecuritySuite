@@ -16,7 +16,7 @@ class Scanning:
 class Httpauthfinder(Scanning):
 	def results(self):
 #		print ("Test http auth finder")
-		test_scan = scanner.scan(self.ipaddress, self.ports, arguments="--script=http-auth-finder.nse")
+		test_scan = scanner.scan(self.ipaddress, self.ports, arguments="--script=/home/michelangelo/NSEScripts/http-auth-finder.nse")
 #		print(test_scan)
 		host_range = scanner.all_hosts()
 		for host in host_range:
@@ -31,14 +31,14 @@ class Httpauthfinder(Scanning):
 class Httpauth(Scanning):
 	def results(self):
 		print ("Test http auth")
-		test_scan = scanner.scan(self.ipaddress, self.ports, arguments="--script=http-auth.nse")
+		test_scan = scanner.scan(self.ipaddress, self.ports, arguments="--script=/home/michelangelo/NSEScripts/http-auth.nse")
 		print(test_scan)
 
 
 class Httpenum(Scanning):
 	def results(self):
 		print ("Test http enum")
-		test_scan = scanner.scan(self.ipaddress, self.ports, arguments="--script=http-enum.nse")
+		test_scan = scanner.scan(self.ipaddress, self.ports, arguments="--script=/home/michelangelo/NSEScripts/http-enum.nse")
 #		print(test_scan)
 		host_range = scanner.all_hosts()
 		for host in host_range:
@@ -52,7 +52,7 @@ class Httpenum(Scanning):
 class Httpmethods(Scanning):
 	def results(self):
 #		print ("Test http methods")
-		test_scan = scanner.scan(self.ipaddress, self.ports, arguments="--script=http-methods.nse")
+		test_scan = scanner.scan(self.ipaddress, self.ports, arguments="--script=/home/michelangelo/NSEScripts/http-methods.nse")
 #		print(test_scan)
 		host_range = scanner.all_hosts()
 		for host in host_range:
@@ -66,5 +66,5 @@ class Httpmethods(Scanning):
 class Httpwaf(Scanning):
 	def results(self):
 		print ("Test http waf")
-		test_scan = scanner.scan(self.ipaddress, self.ports, arguments="--script=http-waf-fingerprint.nse")
+		test_scan = scanner.scan(self.ipaddress, self.ports, arguments="--script=/home/michelangelo/NSEScripts/http-waf-fingerprint.nse")
 		print(test_scan)

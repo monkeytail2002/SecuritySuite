@@ -28,34 +28,34 @@ class Scanning:
 #print("Choice")
 if scan_type == 1:
     pscan = portscan.Portscan(ip_range, port_range)
-    pscan.results()
+    pscan.tcp_results()
 elif scan_type == 2:
     pscan = portscan.Stealthscan(ip_range, port_range)
-    pscan.testresult()
+    pscan.stealth_result()
 elif scan_type == 3:
     pscan = portscan.UDPScan(ip_range, port_range)
-    pscan.results()
+    pscan.udp_results()
 elif scan_type == 4:
     pscan = portscan.Sigtran(ip_range, port_range)
-    pscan.results()
+    pscan.sigtran_results()
 elif scan_type == 5:
     pscan = portscan.Nullscan(ip_range, port_range)
-    pscan.results()
+    pscan.null_results()
 elif scan_type == 6:
     pscan = portscan.Finnscan(ip_range, port_range)
-    pscan.results()
+    pscan.finnscan_results()
 elif scan_type == 7:
     pscan = portscan.Xmasscan(ip_range, port_range)
-    pscan.results()
+    pscan.xmasscan_results()
 elif scan_type == 8:
     pscan = portscan.TCPAckscan(ip_range, port_range)
-    pscan.results()
+    pscan.tcpackscan_results()
 elif scan_type == 9:
     pscan = portscan.Cookiescan(ip_range, port_range)
-    pscan.results()
+    pscan.cookie_results()
 elif scan_type == 10:
     pscan = portscan.IPscan(ip_range, port_range)
-    pscan.results()
+    pscan.ipscan_results()
 elif scan_type == 11:
 	bgrab = bannergrab.Bannergrab(ip_range, port_range)
 	bgrab.results()

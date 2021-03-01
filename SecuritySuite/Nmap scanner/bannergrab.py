@@ -2,7 +2,7 @@
 
 
 import nmap
-import json
+
 
 #Set the scanner for the nmap module
 scanner = nmap.PortScanner()
