@@ -2,7 +2,7 @@
 
 #Developed by Angus MacDonald(15009351) as part of the UG409758 Team Project module for BSc Computing Science.
 #Tutor: Graeme Martindale
-#Members of team: 15009351, 
+#Members of team: Angus MacDonald 15009351, Jordan L 15009237, 
 #Version: 2.10 Date Completed and fully tested: 1/3/21
 
 #Import required modules

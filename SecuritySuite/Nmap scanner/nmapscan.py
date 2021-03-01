@@ -25,7 +25,6 @@ class Scanning:
 	def __init__(self, ipaddress, ports):
 		pass
 	
-#print("Choice")
 if scan_type == 1:
     pscan = portscan.Portscan(ip_range, port_range)
     pscan.tcp_results()
@@ -43,10 +42,10 @@ elif scan_type == 5:
     pscan.null_results()
 elif scan_type == 6:
     pscan = portscan.Finnscan(ip_range, port_range)
-    pscan.finnscan_results()
+    pscan.finn_results()
 elif scan_type == 7:
     pscan = portscan.Xmasscan(ip_range, port_range)
-    pscan.xmasscan_results()
+    pscan.xmas_results()
 elif scan_type == 8:
     pscan = portscan.TCPAckscan(ip_range, port_range)
     pscan.tcpackscan_results()
@@ -60,68 +59,71 @@ elif scan_type == 11:
 	bgrab = bannergrab.Bannergrab(ip_range, port_range)
 	bgrab.results()
 elif scan_type == 12:
-	vdetect = versiondetect.Intensityzero(ip_range, port_range)
-	vdetect.results()
+	bgrab = bannergrab.Bannervuln(ip_range, port_range)
+	bgrab.vuln_results()
 elif scan_type == 13:
-	vdetect = versiondetect.Intensityone(ip_range, port_range)
-	vdetect.results()
+	vdetect = versiondetect.Intensityzero(ip_range, port_range)
+	vdetect.vzero_results()
 elif scan_type == 14:
-	vdetect = versiondetect.Intensitytwo(ip_range, port_range)
-	vdetect.results()
+	vdetect = versiondetect.Intensityone(ip_range, port_range)
+	vdetect.vone_results()
 elif scan_type == 15:
-	vdetect = versiondetect.Intensitythree(ip_range, port_range)
-	vdetect.results()
+	vdetect = versiondetect.Intensitytwo(ip_range, port_range)
+	vdetect.vtwo_results()
 elif scan_type == 16:
-	vdetect = versiondetect.Intensityfour(ip_range, port_range)
-	vdetect.results()
+	vdetect = versiondetect.Intensitythree(ip_range, port_range)
+	vdetect.vthree_results()
 elif scan_type == 17:
-	vdetect = versiondetect.Intensityfive(ip_range, port_range)
-	vdetect.results()
+	vdetect = versiondetect.Intensityfour(ip_range, port_range)
+	vdetect.vfour_results()
 elif scan_type == 18:
-	vdetect = versiondetect.Intensitysix(ip_range, port_range)
-	vdetect.results()
+	vdetect = versiondetect.Intensityfive(ip_range, port_range)
+	vdetect.vfive_results()
 elif scan_type == 19:
-	vdetect = versiondetect.Intensityseven(ip_range, port_range)
-	vdetect.results()
+	vdetect = versiondetect.Intensitysix(ip_range, port_range)
+	vdetect.vsix_results()
 elif scan_type == 20:
-	vdetect = versiondetect.Intensityeight(ip_range, port_range)
-	vdetect.results()
+	vdetect = versiondetect.Intensityseven(ip_range, port_range)
+	vdetect.vseven_results()
 elif scan_type == 21:
-	vdetect = versiondetect.Intensitynine(ip_range, port_range)
-	vdetect.results()
+	vdetect = versiondetect.Intensityeight(ip_range, port_range)
+	vdetect.veight_results()
 elif scan_type == 22:
-	odetect = osdetect.Limitedos(ip_range, port_range)
-	odetect.results()
+	vdetect = versiondetect.Intensitynine(ip_range, port_range)
+	vdetect.vnine_results()
 elif scan_type == 23:
-	odetect = osdetect.Guessos(ip_range, port_range)
-	odetect.results()
+	odetect = osdetect.Limitedos(ip_range, port_range)
+	odetect.limited_results()
 elif scan_type == 24:
-	odetect = osdetect.Maxoneos(ip_range, port_range)
-	odetect.results()
+	odetect = osdetect.Guessos(ip_range, port_range)
+	odetect.guess_results()
 elif scan_type == 25:
-	odetect = osdetect.Maxtwoos(ip_range, port_range)
-	odetect.results()
+	odetect = osdetect.Maxoneos(ip_range, port_range)
+	odetect.maxone_results()
 elif scan_type == 26:
-	odetect = osdetect.Maxthreeos(ip_range, port_range)
-	odetect.results()
+	odetect = osdetect.Maxtwoos(ip_range, port_range)
+	odetect.maxtwo_results()
 elif scan_type == 27:
-	odetect = osdetect.Maxfouros(ip_range, port_range)
-	odetect.results()
+	odetect = osdetect.Maxthreeos(ip_range, port_range)
+	odetect.maxthree_results()
 elif scan_type == 28:
-	odetect = osdetect.Maxfiveos(ip_range, port_range)
-	odetect.results()
+	odetect = osdetect.Maxfouros(ip_range, port_range)
+	odetect.maxfour_results()
 elif scan_type == 29:
+	odetect = osdetect.Maxfiveos(ip_range, port_range)
+	odetect.maxfive_results()
+elif scan_type == 30:
 	nsescript = nsescripts.Httpauthfinder(ip_range, port_range)
 	nsescript.results()
-elif scan_type == 30:
+elif scan_type == 31:
 	nsescript = nsescripts.Httpauth(ip_range, port_range)
 	nsescript.results()
-elif scan_type == 31:
+elif scan_type == 32:
 	nsescript = nsescripts.Httpenum(ip_range, port_range)
 	nsescript.results()
-elif scan_type == 32:
+elif scan_type == 33:
 	nsescript = nsescripts.Httpmethods(ip_range, port_range)
 	nsescript.results()
-elif scan_type == 33:
+elif scan_type == 34:
 	nsescript = nsescripts.Httpwaf(ip_range, port_range)
 	nsescript.results()

@@ -1,8 +1,11 @@
 #!/usr/bin/env python
-
+#Developed by Angus MacDonald(15009351) as part of the UG409758 Team Project module for BSc Computing Science.
+#Tutor: Graeme Martindale
+#Members of team: Angus MacDonald 15009351, Jordan L 15009237, 
+#Version: 2.10 Date Completed and fully tested: 1/3/21
 
 import nmap
-import json
+
 
 #Set the scanner for the nmap module
 scanner = nmap.PortScanner()
@@ -15,175 +18,217 @@ class Scanning:
 
 
 class Limitedos(Scanning):
-	def results(self):
+	def limited_results(self):
 #		print("limited")
-		test_scan = scanner.scan(self.ipaddress, arguments='-O -v --osscan-limit')
-		print('Hosts Up | Down: %s | %s' % (test_scan["nmap"]["scanstats"]["uphosts"], test_scan["nmap"]["scanstats"]["downhosts"]))
-		print('Total Hosts Scanned: %s' % (test_scan["nmap"]["scanstats"]["totalhosts"]))
+		limited_scan = scanner.scan(self.ipaddress, arguments='-O -v --osscan-limit')
+#		print(limited_scan)
+		returned_list=[]
+		returned_list.append(limited_scan["nmap"]["scanstats"]["uphosts"])
+		returned_list.append(limited_scan["nmap"]["scanstats"]["downhosts"])
+		returned_list.append(limited_scan["nmap"]["scanstats"]["totalhosts"])
 		hostRange = scanner.all_hosts()
 		for host in hostRange:
-			print('Target: %s (%s)' % (host, scanner[host].hostname()))
-			print('State: %s' % (scanner[host]["status"]["state"]))
-			print('Uptime Seconds | Last Boot: %s | %s' % (scanner[host]["uptime"]["seconds"], scanner[host]["uptime"]["lastboot"]))
+			returned_list.append(host)
+			returned_list.append(scanner[host].hostname())
+			returned_list.append(scanner[host]["status"]["state"])
+			returned_list.append(scanner[host]["uptime"]["seconds"])
+			returned_list.append(scanner[host]["uptime"]["lastboot"])			
 			detected_os = scanner[host]["osmatch"]
 			for os in detected_os:
-				print('OS Type: %s' % (os["name"]))
-				print('Accuracy: %s' % (os["accuracy"]))
+				returned_list.append(os["name"])
+				returned_list.append(os["accuracy"])
 				os_info = os["osclass"]
 				for info in os_info:
-					print('Type: %s' % (info["type"]))
-					print('Vendor: %s' % (info["vendor"]))
-					print('OS Family: %s' % (info["osfamily"]))
-					print('Kernel Version: %s' % (info["osgen"]))
-					print('Accuracy Rating: %s' % (info["accuracy"]))
-					print('Extra Information: %s' % (info['cpe']))
+					returned_list.append(info["type"])
+					returned_list.append(info["vendor"])
+					returned_list.append(info["osfamily"])
+					returned_list.append(info["osgen"])
+					returned_list.append(info["accuracy"])
+					returned_list.append(info["cpe"])
+				print(returned_list)
 
 
 
 class Guessos(Scanning):
-	def results(self):
+	def guess_results(self):
 #		print("Guess")
-		test_scan = scanner.scan(self.ipaddress, arguments='-O -v --osscan-guess')
-		print('Hosts Up | Down: %s | %s' % (test_scan["nmap"]["scanstats"]["uphosts"], test_scan["nmap"]["scanstats"]["downhosts"]))
-		print('Total Hosts Scanned: %s' % (test_scan["nmap"]["scanstats"]["totalhosts"]))
+		guess_scan = scanner.scan(self.ipaddress, arguments='-O -v --osscan-limit')
+#		print(guess_scan)
+		returned_list=[]
+		returned_list.append(guess_scan["nmap"]["scanstats"]["uphosts"])
+		returned_list.append(guess_scan["nmap"]["scanstats"]["downhosts"])
+		returned_list.append(guess_scan["nmap"]["scanstats"]["totalhosts"])
 		hostRange = scanner.all_hosts()
 		for host in hostRange:
-			print('Target: %s (%s)' % (host, scanner[host].hostname()))
-			print('State: %s' % (scanner[host]["status"]["state"]))
-			print('Uptime Seconds | Last Boot: %s | %s' % (scanner[host]["uptime"]["seconds"], scanner[host]["uptime"]["lastboot"]))
+			returned_list.append(host)
+			returned_list.append(scanner[host].hostname())
+			returned_list.append(scanner[host]["status"]["state"])
+			returned_list.append(scanner[host]["uptime"]["seconds"])
+			returned_list.append(scanner[host]["uptime"]["lastboot"])			
 			detected_os = scanner[host]["osmatch"]
 			for os in detected_os:
-				print('OS Type: %s' % (os["name"]))
-				print('Accuracy: %s' % (os["accuracy"]))
+				returned_list.append(os["name"])
+				returned_list.append(os["accuracy"])
 				os_info = os["osclass"]
 				for info in os_info:
-					print('Type: %s' % (info["type"]))
-					print('Vendor: %s' % (info["vendor"]))
-					print('OS Family: %s' % (info["osfamily"]))
-					print('Kernel Version: %s' % (info["osgen"]))
-					print('Accuracy Rating: %s' % (info["accuracy"]))
-					print('Extra Information: %s' % (info['cpe']))
+					returned_list.append(info["type"])
+					returned_list.append(info["vendor"])
+					returned_list.append(info["osfamily"])
+					returned_list.append(info["osgen"])
+					returned_list.append(info["accuracy"])
+					returned_list.append(info["cpe"])
+				print(returned_list)
 
 class Maxoneos(Scanning):
-	def results(scan):
+	def maxone_results(self):
 #		print("Max one")
-		test_scan = scanner.scan(self.ipaddress, arguments='-O -v --max-os-tries 1')
-		print('Hosts Up | Down: %s | %s' % (test_scan["nmap"]["scanstats"]["uphosts"], test_scan["nmap"]["scanstats"]["downhosts"]))
-		print('Total Hosts Scanned: %s' % (test_scan["nmap"]["scanstats"]["totalhosts"]))
+		maxone_scan = scanner.scan(self.ipaddress, arguments='-O -v --osscan-limit')
+#		print(maxone_scan)
+		returned_list=[]
+		returned_list.append(maxone_scan["nmap"]["scanstats"]["uphosts"])
+		returned_list.append(maxone_scan["nmap"]["scanstats"]["downhosts"])
+		returned_list.append(maxone_scan["nmap"]["scanstats"]["totalhosts"])
 		hostRange = scanner.all_hosts()
 		for host in hostRange:
-			print('Target: %s (%s)' % (host, scanner[host].hostname()))
-			print('State: %s' % (scanner[host]["status"]["state"]))
-			print('Uptime Seconds | Last Boot: %s | %s' % (scanner[host]["uptime"]["seconds"], scanner[host]["uptime"]["lastboot"]))
+			returned_list.append(host)
+			returned_list.append(scanner[host].hostname())
+			returned_list.append(scanner[host]["status"]["state"])
+			returned_list.append(scanner[host]["uptime"]["seconds"])
+			returned_list.append(scanner[host]["uptime"]["lastboot"])			
 			detected_os = scanner[host]["osmatch"]
 			for os in detected_os:
-				print('OS Type: %s' % (os["name"]))
-				print('Accuracy: %s' % (os["accuracy"]))
+				returned_list.append(os["name"])
+				returned_list.append(os["accuracy"])
 				os_info = os["osclass"]
 				for info in os_info:
-					print('Type: %s' % (info["type"]))
-					print('Vendor: %s' % (info["vendor"]))
-					print('OS Family: %s' % (info["osfamily"]))
-					print('Kernel Version: %s' % (info["osgen"]))
-					print('Accuracy Rating: %s' % (info["accuracy"]))
-					print('Extra Information: %s' % (info['cpe']))
+					returned_list.append(info["type"])
+					returned_list.append(info["vendor"])
+					returned_list.append(info["osfamily"])
+					returned_list.append(info["osgen"])
+					returned_list.append(info["accuracy"])
+					returned_list.append(info["cpe"])
+				print(returned_list)
 
 
 class Maxtwoos(Scanning):
-	def results(scan):
+	def maxtwo_results(self):
 #		print("Max two")
-		test_scan = scanner.scan(self.ipaddress, arguments='-O -v --max-os-tries 2')
-		print('Hosts Up | Down: %s | %s' % (test_scan["nmap"]["scanstats"]["uphosts"], test_scan["nmap"]["scanstats"]["downhosts"]))
-		print('Total Hosts Scanned: %s' % (test_scan["nmap"]["scanstats"]["totalhosts"]))
+		maxtwo_scan = scanner.scan(self.ipaddress, arguments='-O -v --osscan-limit')
+#		print(maxtwo_scan)
+		returned_list=[]
+		returned_list.append(maxtwo_scan["nmap"]["scanstats"]["uphosts"])
+		returned_list.append(maxtwo_scan["nmap"]["scanstats"]["downhosts"])
+		returned_list.append(maxtwo_scan["nmap"]["scanstats"]["totalhosts"])
 		hostRange = scanner.all_hosts()
 		for host in hostRange:
-			print('Target: %s (%s)' % (host, scanner[host].hostname()))
-			print('State: %s' % (scanner[host]["status"]["state"]))
-			print('Uptime Seconds | Last Boot: %s | %s' % (scanner[host]["uptime"]["seconds"], scanner[host]["uptime"]["lastboot"]))
+			returned_list.append(host)
+			returned_list.append(scanner[host].hostname())
+			returned_list.append(scanner[host]["status"]["state"])
+			returned_list.append(scanner[host]["uptime"]["seconds"])
+			returned_list.append(scanner[host]["uptime"]["lastboot"])			
 			detected_os = scanner[host]["osmatch"]
 			for os in detected_os:
-				print('OS Type: %s' % (os["name"]))
-				print('Accuracy: %s' % (os["accuracy"]))
+				returned_list.append(os["name"])
+				returned_list.append(os["accuracy"])
 				os_info = os["osclass"]
 				for info in os_info:
-					print('Type: %s' % (info["type"]))
-					print('Vendor: %s' % (info["vendor"]))
-					print('OS Family: %s' % (info["osfamily"]))
-					print('Kernel Version: %s' % (info["osgen"]))
-					print('Accuracy Rating: %s' % (info["accuracy"]))
-					print('Extra Information: %s' % (info['cpe']))
+					returned_list.append(info["type"])
+					returned_list.append(info["vendor"])
+					returned_list.append(info["osfamily"])
+					returned_list.append(info["osgen"])
+					returned_list.append(info["accuracy"])
+					returned_list.append(info["cpe"])
+				print(returned_list)
 
 
 class Maxthreeos(Scanning):
-	def results(scan):
+	def maxthree_results(self):
 #		print("Max three")
-		test_scan = scanner.scan(self.ipaddress, arguments='-O -v --max-os-tries 3')
-		print('Hosts Up | Down: %s | %s' % (test_scan["nmap"]["scanstats"]["uphosts"], test_scan["nmap"]["scanstats"]["downhosts"]))
-		print('Total Hosts Scanned: %s' % (test_scan["nmap"]["scanstats"]["totalhosts"]))
+		maxthree_scan = scanner.scan(self.ipaddress, arguments='-O -v --osscan-limit')
+#		print(maxthree_scan)
+		returned_list=[]
+		returned_list.append(maxthree_scan["nmap"]["scanstats"]["uphosts"])
+		returned_list.append(maxthree_scan["nmap"]["scanstats"]["downhosts"])
+		returned_list.append(maxthree_scan["nmap"]["scanstats"]["totalhosts"])
 		hostRange = scanner.all_hosts()
 		for host in hostRange:
-			print('Target: %s (%s)' % (host, scanner[host].hostname()))
-			print('State: %s' % (scanner[host]["status"]["state"]))
-			print('Uptime Seconds | Last Boot: %s | %s' % (scanner[host]["uptime"]["seconds"], scanner[host]["uptime"]["lastboot"]))
+			returned_list.append(host)
+			returned_list.append(scanner[host].hostname())
+			returned_list.append(scanner[host]["status"]["state"])
+			returned_list.append(scanner[host]["uptime"]["seconds"])
+			returned_list.append(scanner[host]["uptime"]["lastboot"])			
 			detected_os = scanner[host]["osmatch"]
 			for os in detected_os:
-				print('OS Type: %s' % (os["name"]))
-				print('Accuracy: %s' % (os["accuracy"]))
+				returned_list.append(os["name"])
+				returned_list.append(os["accuracy"])
 				os_info = os["osclass"]
 				for info in os_info:
-					print('Type: %s' % (info["type"]))
-					print('Vendor: %s' % (info["vendor"]))
-					print('OS Family: %s' % (info["osfamily"]))
-					print('Kernel Version: %s' % (info["osgen"]))
-					print('Accuracy Rating: %s' % (info["accuracy"]))
-					print('Extra Information: %s' % (info['cpe']))
+					returned_list.append(info["type"])
+					returned_list.append(info["vendor"])
+					returned_list.append(info["osfamily"])
+					returned_list.append(info["osgen"])
+					returned_list.append(info["accuracy"])
+					returned_list.append(info["cpe"])
+				print(returned_list)
 
 
 class Maxfouros(Scanning):
-	def results(scan):
+	def maxfour_results(self):
 #		print("Max four")
-		test_scan = scanner.scan(self.ipaddress, arguments='-O -v --max-os-tries 4')
-		print('Hosts Up | Down: %s | %s' % (test_scan["nmap"]["scanstats"]["uphosts"], test_scan["nmap"]["scanstats"]["downhosts"]))
-		print('Total Hosts Scanned: %s' % (test_scan["nmap"]["scanstats"]["totalhosts"]))
+		maxfour_scan = scanner.scan(self.ipaddress, arguments='-O -v --osscan-limit')
+#		print(maxfour_scan)
+		returned_list=[]
+		returned_list.append(maxfour_scan["nmap"]["scanstats"]["uphosts"])
+		returned_list.append(maxfour_scan["nmap"]["scanstats"]["downhosts"])
+		returned_list.append(maxfour_scan["nmap"]["scanstats"]["totalhosts"])
 		hostRange = scanner.all_hosts()
 		for host in hostRange:
-			print('Target: %s (%s)' % (host, scanner[host].hostname()))
-			print('State: %s' % (scanner[host]["status"]["state"]))
-			print('Uptime Seconds | Last Boot: %s | %s' % (scanner[host]["uptime"]["seconds"], scanner[host]["uptime"]["lastboot"]))
+			returned_list.append(host)
+			returned_list.append(scanner[host].hostname())
+			returned_list.append(scanner[host]["status"]["state"])
+			returned_list.append(scanner[host]["uptime"]["seconds"])
+			returned_list.append(scanner[host]["uptime"]["lastboot"])			
 			detected_os = scanner[host]["osmatch"]
 			for os in detected_os:
-				print('OS Type: %s' % (os["name"]))
-				print('Accuracy: %s' % (os["accuracy"]))
+				returned_list.append(os["name"])
+				returned_list.append(os["accuracy"])
 				os_info = os["osclass"]
 				for info in os_info:
-					print('Type: %s' % (info["type"]))
-					print('Vendor: %s' % (info["vendor"]))
-					print('OS Family: %s' % (info["osfamily"]))
-					print('Kernel Version: %s' % (info["osgen"]))
-					print('Accuracy Rating: %s' % (info["accuracy"]))
-					print('Extra Information: %s' % (info['cpe']))
+					returned_list.append(info["type"])
+					returned_list.append(info["vendor"])
+					returned_list.append(info["osfamily"])
+					returned_list.append(info["osgen"])
+					returned_list.append(info["accuracy"])
+					returned_list.append(info["cpe"])
+				print(returned_list)
 
 
 class Maxfiveos(Scanning):
-	def results(scan):
+	def maxfive_results(self):
 #		print("Max five")
-		test_scan = scanner.scan(self.ipaddress, arguments='-O -v --max-os-tries 5')
-		print('Hosts Up | Down: %s | %s' % (test_scan["nmap"]["scanstats"]["uphosts"], test_scan["nmap"]["scanstats"]["downhosts"]))
-		print('Total Hosts Scanned: %s' % (test_scan["nmap"]["scanstats"]["totalhosts"]))
+		maxfive_scan = scanner.scan(self.ipaddress, arguments='-O -v --osscan-limit')
+#		print(maxfive_scan)
+		returned_list=[]
+		returned_list.append(maxfive_scan["nmap"]["scanstats"]["uphosts"])
+		returned_list.append(maxfive_scan["nmap"]["scanstats"]["downhosts"])
+		returned_list.append(maxfive_scan["nmap"]["scanstats"]["totalhosts"])
 		hostRange = scanner.all_hosts()
 		for host in hostRange:
-			print('Target: %s (%s)' % (host, scanner[host].hostname()))
-			print('State: %s' % (scanner[host]["status"]["state"]))
-			print('Uptime Seconds | Last Boot: %s | %s' % (scanner[host]["uptime"]["seconds"], scanner[host]["uptime"]["lastboot"]))
+			returned_list.append(host)
+			returned_list.append(scanner[host].hostname())
+			returned_list.append(scanner[host]["status"]["state"])
+			returned_list.append(scanner[host]["uptime"]["seconds"])
+			returned_list.append(scanner[host]["uptime"]["lastboot"])			
 			detected_os = scanner[host]["osmatch"]
 			for os in detected_os:
-				print('OS Type: %s' % (os["name"]))
-				print('Accuracy: %s' % (os["accuracy"]))
+				returned_list.append(os["name"])
+				returned_list.append(os["accuracy"])
 				os_info = os["osclass"]
 				for info in os_info:
-					print('Type: %s' % (info["type"]))
-					print('Vendor: %s' % (info["vendor"]))
-					print('OS Family: %s' % (info["osfamily"]))
-					print('Kernel Version: %s' % (info["osgen"]))
-					print('Accuracy Rating: %s' % (info["accuracy"]))
-					print('Extra Information: %s' % (info['cpe']))
+					returned_list.append(info["type"])
+					returned_list.append(info["vendor"])
+					returned_list.append(info["osfamily"])
+					returned_list.append(info["osgen"])
+					returned_list.append(info["accuracy"])
+					returned_list.append(info["cpe"])
+				print(returned_list)
