@@ -114,16 +114,16 @@ elif scan_type == 29:
 	odetect.maxfive_results()
 elif scan_type == 30:
 	nsescript = nsescripts.Httpauthfinder(ip_range, port_range)
-	nsescript.results()
+	nsescript.authfinder_results()
 elif scan_type == 31:
 	nsescript = nsescripts.Httpauth(ip_range, port_range)
-	nsescript.results()
+	nsescript.httpauth_results()
 elif scan_type == 32:
 	nsescript = nsescripts.Httpenum(ip_range, port_range)
-	nsescript.results()
+	nsescript.Httpenum_results()
 elif scan_type == 33:
 	nsescript = nsescripts.Httpmethods(ip_range, port_range)
-	nsescript.results()
+	nsescript.Httpmethods_results()
 elif scan_type == 34:
-	nsescript = nsescripts.Httpwaf(ip_range, port_range)
-	nsescript.results()
+	nsescript = nsescripts.httpsitemapgenerator(ip_range, port_range)
+	nsescript.sitemap_results()
