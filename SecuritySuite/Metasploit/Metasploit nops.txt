@@ -1,0 +1,21 @@
+
+[
+'aarch64/simple',
+
+'armle/simple', 
+
+'mipsbe/better', 
+
+'php/generic', 
+
+
+'ppc/simple', 
+
+'sparc/random', 
+
+'tty/generic', 
+
+'x64/simple', 
+
+
+'x86/opty2', 'x86/single_byte']
