@@ -31,8 +31,6 @@ user_list = user_input.split("~")
 meta_module = user_list[0]
 meta_group = user_list[1]
 
-
-print(meta_module)
 #Connect to Metasploit
 meta_client = MsfRpcClient(con_pass)
 
