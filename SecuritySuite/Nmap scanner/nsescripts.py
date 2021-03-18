@@ -2,11 +2,12 @@
 
 #Developed by Angus MacDonald(15009351) as part of the UG409758 Team Project module for BSc Computing Science.
 #Tutor: Graeme Martindale
-#Members of team: Angus MacDonald 15009351, Jordan L 15009237, 
-#Version: 2.10 Date Completed and fully tested: 1/3/21
+#Members of team: Angus MacDonald 15009351, Jordan L 15009237, Jim
+#Version: 2.40 Date Completed and fully tested: 18/3/21
 
 
 import nmap
+import json
 
 
 #Set the scanner for the nmap module
@@ -21,182 +22,174 @@ class Scanning:
 class Httpauthfinder(Scanning):
 	def authfinder_results(self):
 #		print ("Test http auth finder")
-		port = "80"
-		authfinder_scan = scanner.scan(self.ipaddress, port, arguments="-sV --script=/home/michelangelo/NSEScripts/http-auth-finder.nse")
+		authfinder_scan = scanner.scan(self.ipaddress, self.ports, arguments="-sV --script=/home/michelangelo/NSEScripts/http-auth-finder.nse")
 #		print(authfinder_scan)
-		returned_list=[]
-#    Append results to list
-		returned_list.append(authfinder_scan["nmap"]["scanstats"]["uphosts"])
-		returned_list.append(authfinder_scan["nmap"]["scanstats"]["downhosts"])
-		returned_list.append(authfinder_scan["nmap"]["scanstats"]["totalhosts"])
-#        Set scanned hosts in the range to a variable
+		authfinder_list=[]
+		authfinder_host=[]
+		#        Set scanned hosts in the range to a variable
 		hostRange = scanner.all_hosts()
 #        Iterate through a for loop to return the hosts, DNS entry and state of host
 		for host in hostRange:
-			returned_list.append(host)
-			returned_list.append(scanner[host].hostname())
-			returned_list.append(scanner[host]["status"]["state"])
+			authfinder_host.append({'host':host, 'hostname': scanner[host].hostname(), 'state':scanner[host]["status"]["state"],'hostreason':scanner[host]["status"]["reason"]})
+			authfinder_protocol=[]
 #            Iterate through a for loop to return the protocol
 			for proto in scanner[host].all_protocols():
-				returned_list.append(proto)
 				scannedPorts = scanner[host][proto].keys()
+				authfinder_protocol.append({'protocols':proto})
+				authfinder_ports=[]
 #                Iterate through for loop for information per port
 				for port in scannedPorts:
-					returned_list.append(port)
-					returned_list.append(scanner[host][proto][port]["state"])
-					returned_list.append(scanner[host][proto][port]["reason"])
-					returned_list.append(scanner[host][proto][port]["name"])
-					returned_list.append(scanner[host][proto][port]["cpe"])
-					if scanner[host][proto][port]["script"]:
-						returned_list.append(scanner[host][proto][port]["script"])
-						print(returned_list)
+					if "script" in scanner[host][proto][port]:
+						authfinder_ports.append({'port':port, 'portstate':scanner[host][proto][port]["state"],'portreason':scanner[host][proto][port]["reason"],'portname':scanner[host][proto][port]["name"],'product':scanner[host][proto][port]["product"],'version':scanner[host][proto][port]["version"],'extrainfo':scanner[host][proto][port]["extrainfo"],'cpe':scanner[host][proto][port]["cpe"],'script':scanner[host][proto][port]["script"]})
 					else:
-						returned_list.append("Nothing to run script against")
-						print(returned_list)
+						authfinder_ports.append({'port':port, 'portstate':scanner[host][proto][port]["state"],'portreason':scanner[host][proto][port]["reason"],'portname':scanner[host][proto][port]["name"],'product':scanner[host][proto][port]["product"],'version':scanner[host][proto][port]["version"],'extrainfo':scanner[host][proto][port]["extrainfo"],'cpe':scanner[host][proto][port]["cpe"],'noscript':"No Scripts could be run against this port."})		
+				authfinder_protocol[-1]['portlist'] = authfinder_ports
+			authfinder_host[-1]['protocollist'] = authfinder_protocol
+			
+			
+		authfinder_list.append({'uphosts': authfinder_scan["nmap"]["scanstats"]["uphosts"], 'downhosts':authfinder_scan["nmap"]["scanstats"]["downhosts"], 'totalhosts':authfinder_scan["nmap"]["scanstats"]["totalhosts"], 'hosts':authfinder_host})
+
+		
+		authfinder = json.dumps(authfinder_list)
+		print (authfinder)
+
 		
 class Httpauth(Scanning):
 	def httpauth_results(self):
 #		print ("Test http auth")
-		port = "80"
-		httpauth_scan = scanner.scan(self.ipaddress, port, arguments="-sV --script=/home/michelangelo/NSEScripts/http-auth.nse")
+		httpauth_scan = scanner.scan(self.ipaddress, self.ports, arguments="-sV --script=/home/michelangelo/NSEScripts/http-auth.nse --script-args 'http-auth.path=/login' ")
 #		print(httpauth_scan)
-		returned_list=[]
-#    Append results to list
-		returned_list.append(httpauth_scan["nmap"]["scanstats"]["uphosts"])
-		returned_list.append(httpauth_scan["nmap"]["scanstats"]["downhosts"])
-		returned_list.append(httpauth_scan["nmap"]["scanstats"]["totalhosts"])
-#        Set scanned hosts in the range to a variable
+		auth_list=[]
+		auth_host=[]
+		#        Set scanned hosts in the range to a variable
 		hostRange = scanner.all_hosts()
 #        Iterate through a for loop to return the hosts, DNS entry and state of host
 		for host in hostRange:
-			returned_list.append(host)
-			returned_list.append(scanner[host].hostname())
-			returned_list.append(scanner[host]["status"]["state"])
+			auth_host.append({'host':host, 'hostname': scanner[host].hostname(), 'state':scanner[host]["status"]["state"],'hostreason':scanner[host]["status"]["reason"]})
+			auth_protocol=[]
 #            Iterate through a for loop to return the protocol
 			for proto in scanner[host].all_protocols():
-				returned_list.append(proto)
 				scannedPorts = scanner[host][proto].keys()
+				auth_protocol.append({'protocols':proto})
+				auth_ports=[]
 #                Iterate through for loop for information per port
 				for port in scannedPorts:
-					returned_list.append(port)
-					returned_list.append(scanner[host][proto][port]["state"])
-					returned_list.append(scanner[host][proto][port]["reason"])
-					returned_list.append(scanner[host][proto][port]["name"])
-					returned_list.append(scanner[host][proto][port]["cpe"])
-					if scanner[host][proto][port]["script"]:
-						returned_list.append(scanner[host][proto][port]["script"])
-						print(returned_list)
+					if "script" in scanner[host][proto][port]:
+						auth_ports.append({'port':port, 'portstate':scanner[host][proto][port]["state"],'portreason':scanner[host][proto][port]["reason"],'portname':scanner[host][proto][port]["name"],'product':scanner[host][proto][port]["product"],'version':scanner[host][proto][port]["version"],'extrainfo':scanner[host][proto][port]["extrainfo"],'cpe':scanner[host][proto][port]["cpe"],'script':scanner[host][proto][port]["script"]})
 					else:
-						returned_list.append("Nothing to run script against")
-						print(returned_list)
+						auth_ports.append({'port':port, 'portstate':scanner[host][proto][port]["state"],'portreason':scanner[host][proto][port]["reason"],'portname':scanner[host][proto][port]["name"],'product':scanner[host][proto][port]["product"],'version':scanner[host][proto][port]["version"],'extrainfo':scanner[host][proto][port]["extrainfo"],'cpe':scanner[host][proto][port]["cpe"],'noscript':"No Scripts could be run against this port."})		
+				auth_protocol[-1]['portlist'] = auth_ports
+			auth_host[-1]['protocollist'] = auth_protocol
+			
+			
+		auth_list.append({'uphosts': httpauth_scan["nmap"]["scanstats"]["uphosts"], 'downhosts':httpauth_scan["nmap"]["scanstats"]["downhosts"], 'totalhosts':httpauth_scan["nmap"]["scanstats"]["totalhosts"], 'hosts':auth_host})
+
+		
+		auth = json.dumps(auth_list)
+		print (auth)
 
 
 class Httpenum(Scanning):
-	def Httpenum_results(self):
+	def httpenum_results(self):
 #		print ("Test http enum")
-		port = "80"
-		Httpenum_scan = scanner.scan(self.ipaddress, port, arguments="-sV --script=/home/michelangelo/NSEScripts/http-enum.nse")
+		httpenum_scan = scanner.scan(self.ipaddress, self.ports, arguments="-sV --script=/home/michelangelo/NSEScripts/http-enum.nse")
 #		print(Httpenum_scan)
-		returned_list=[]
-#    Append results to list
-		returned_list.append(Httpenum_scan["nmap"]["scanstats"]["uphosts"])
-		returned_list.append(Httpenum_scan["nmap"]["scanstats"]["downhosts"])
-		returned_list.append(Httpenum_scan["nmap"]["scanstats"]["totalhosts"])
-#        Set scanned hosts in the range to a variable
+		enum_list=[]
+		enum_host=[]
+		#        Set scanned hosts in the range to a variable
 		hostRange = scanner.all_hosts()
 #        Iterate through a for loop to return the hosts, DNS entry and state of host
 		for host in hostRange:
-			returned_list.append(host)
-			returned_list.append(scanner[host].hostname())
-			returned_list.append(scanner[host]["status"]["state"])
+			enum_host.append({'host':host, 'hostname': scanner[host].hostname(), 'state':scanner[host]["status"]["state"],'hostreason':scanner[host]["status"]["reason"]})
+			enum_protocol=[]
 #            Iterate through a for loop to return the protocol
 			for proto in scanner[host].all_protocols():
-				returned_list.append(proto)
 				scannedPorts = scanner[host][proto].keys()
+				enum_protocol.append({'protocols':proto})
+				enum_ports=[]
 #                Iterate through for loop for information per port
 				for port in scannedPorts:
-					returned_list.append(port)
-					returned_list.append(scanner[host][proto][port]["state"])
-					returned_list.append(scanner[host][proto][port]["reason"])
-					returned_list.append(scanner[host][proto][port]["name"])
-					returned_list.append(scanner[host][proto][port]["cpe"])
-					if scanner[host][proto][port]["script"]:
-						returned_list.append(scanner[host][proto][port]["script"])
-						print(returned_list)
+					if "script" in scanner[host][proto][port]:
+						enum_ports.append({'port':port, 'portstate':scanner[host][proto][port]["state"],'portreason':scanner[host][proto][port]["reason"],'portname':scanner[host][proto][port]["name"],'product':scanner[host][proto][port]["product"],'version':scanner[host][proto][port]["version"],'extrainfo':scanner[host][proto][port]["extrainfo"],'cpe':scanner[host][proto][port]["cpe"],'script':scanner[host][proto][port]["script"]})
 					else:
-						returned_list.append("Nothing to run script against")
-						print(returned_list)
+						enum_ports.append({'port':port, 'portstate':scanner[host][proto][port]["state"],'portreason':scanner[host][proto][port]["reason"],'portname':scanner[host][proto][port]["name"],'product':scanner[host][proto][port]["product"],'version':scanner[host][proto][port]["version"],'extrainfo':scanner[host][proto][port]["extrainfo"],'cpe':scanner[host][proto][port]["cpe"],'noscript':"No Scripts could be run against this port."})		
+				enum_protocol[-1]['portlist'] = enum_ports
+			enum_host[-1]['protocollist'] = enum_protocol
+			
+			
+		enum_list.append({'uphosts': httpenum_scan["nmap"]["scanstats"]["uphosts"], 'downhosts':httpenum_scan["nmap"]["scanstats"]["downhosts"], 'totalhosts':httpenum_scan["nmap"]["scanstats"]["totalhosts"], 'hosts':enum_host})
+
+		
+		enum = json.dumps(enum_list)
+		print (enum)
+
 
 
 class Httpmethods(Scanning):
-	def Httpmethods_results(self):
+	def httpmethods_results(self):
 #		print ("Test http methods")
-		port="80"
-		Httpmethods_scan = scanner.scan(self.ipaddress, port, arguments="-sV --script=/home/michelangelo/NSEScripts/http-methods.nse")
-#		print(Httpmethods_scan)
-		returned_list=[]
-#    Append results to list
-		returned_list.append(Httpmethods_scan["nmap"]["scanstats"]["uphosts"])
-		returned_list.append(Httpmethods_scan["nmap"]["scanstats"]["downhosts"])
-		returned_list.append(Httpmethods_scan["nmap"]["scanstats"]["totalhosts"])
-#        Set scanned hosts in the range to a variable
+		httpmethods_scan = scanner.scan(self.ipaddress, self.ports, arguments="-sV --script=/home/michelangelo/NSEScripts/http-methods.nse")
+#		print(httpmethods_scan)
+		methods_list=[]
+		methods_host=[]
+		#        Set scanned hosts in the range to a variable
 		hostRange = scanner.all_hosts()
 #        Iterate through a for loop to return the hosts, DNS entry and state of host
 		for host in hostRange:
-			returned_list.append(host)
-			returned_list.append(scanner[host].hostname())
-			returned_list.append(scanner[host]["status"]["state"])
+			methods_host.append({'host':host, 'hostname': scanner[host].hostname(), 'state':scanner[host]["status"]["state"],'hostreason':scanner[host]["status"]["reason"]})
+			methods_protocol=[]
 #            Iterate through a for loop to return the protocol
 			for proto in scanner[host].all_protocols():
-				returned_list.append(proto)
 				scannedPorts = scanner[host][proto].keys()
+				methods_protocol.append({'protocols':proto})
+				methods_ports=[]
 #                Iterate through for loop for information per port
 				for port in scannedPorts:
-					returned_list.append(port)
-					returned_list.append(scanner[host][proto][port]["state"])
-					returned_list.append(scanner[host][proto][port]["reason"])
-					returned_list.append(scanner[host][proto][port]["name"])
-					returned_list.append(scanner[host][proto][port]["cpe"])
-					if scanner[host][proto][port]["script"]:
-						returned_list.append(scanner[host][proto][port]["script"])
-						print(returned_list)
+					if "script" in scanner[host][proto][port]:
+						methods_ports.append({'port':port, 'portstate':scanner[host][proto][port]["state"],'portreason':scanner[host][proto][port]["reason"],'portname':scanner[host][proto][port]["name"],'product':scanner[host][proto][port]["product"],'version':scanner[host][proto][port]["version"],'extrainfo':scanner[host][proto][port]["extrainfo"],'cpe':scanner[host][proto][port]["cpe"],'script':scanner[host][proto][port]["script"]})
 					else:
-						returned_list.append("Nothing to run script against")
-						print(returned_list)
+						methods_ports.append({'port':port, 'portstate':scanner[host][proto][port]["state"],'portreason':scanner[host][proto][port]["reason"],'portname':scanner[host][proto][port]["name"],'product':scanner[host][proto][port]["product"],'version':scanner[host][proto][port]["version"],'extrainfo':scanner[host][proto][port]["extrainfo"],'cpe':scanner[host][proto][port]["cpe"],'noscript':"No Scripts could be run against this port."})		
+				methods_protocol[-1]['portlist'] = methods_ports
+			methods_host[-1]['protocollist'] = methods_protocol
+			
+			
+		methods_list.append({'uphosts': httpmethods_scan["nmap"]["scanstats"]["uphosts"], 'downhosts':httpmethods_scan["nmap"]["scanstats"]["downhosts"], 'totalhosts':httpmethods_scan["nmap"]["scanstats"]["totalhosts"], 'hosts':methods_host})
+
+		
+		methods = json.dumps(methods_list)
+		print (methods)
 
 
 class httpsitemapgenerator(Scanning):
 	def sitemap_results(self):
 #		print ("Test sitemap")
-		port = "80"
-		sitemap_scan = scanner.scan(self.ipaddress, port, arguments="--script=/home/michelangelo/NSEScripts/http-sitemap-generator.nse")
+		sitemap_scan = scanner.scan(self.ipaddress, self.ports, arguments="--script=/home/michelangelo/NSEScripts/http-sitemap-generator.nse")
 #		print(sitemap_scan)
-		returned_list=[]
-#    Append results to list
-		returned_list.append(sitemap_scan["nmap"]["scanstats"]["uphosts"])
-		returned_list.append(sitemap_scan["nmap"]["scanstats"]["downhosts"])
-		returned_list.append(sitemap_scan["nmap"]["scanstats"]["totalhosts"])
-#        Set scanned hosts in the range to a variable
+		sitemap_list=[]
+		sitemap_host=[]
+		#        Set scanned hosts in the range to a variable
 		hostRange = scanner.all_hosts()
 #        Iterate through a for loop to return the hosts, DNS entry and state of host
 		for host in hostRange:
-			returned_list.append(host)
-			returned_list.append(scanner[host].hostname())
-			returned_list.append(scanner[host]["status"]["state"])
+			sitemap_host.append({'host':host, 'hostname': scanner[host].hostname(), 'state':scanner[host]["status"]["state"],'hostreason':scanner[host]["status"]["reason"]})
+			sitemap_protocol=[]
 #            Iterate through a for loop to return the protocol
 			for proto in scanner[host].all_protocols():
-				returned_list.append(proto)
 				scannedPorts = scanner[host][proto].keys()
+				sitemap_protocol.append({'protocols':proto})
+				sitemap_ports=[]
 #                Iterate through for loop for information per port
 				for port in scannedPorts:
-					returned_list.append(port)
-					returned_list.append(scanner[host][proto][port]["state"])
-					returned_list.append(scanner[host][proto][port]["reason"])
-					returned_list.append(scanner[host][proto][port]["name"])
-					returned_list.append(scanner[host][proto][port]["cpe"])
-					if scanner[host][proto][port]["script"]:
-						returned_list.append(scanner[host][proto][port]["script"])
-						print(returned_list)
+					if "script" in scanner[host][proto][port]:
+						sitemap_ports.append({'port':port, 'portstate':scanner[host][proto][port]["state"],'portreason':scanner[host][proto][port]["reason"],'portname':scanner[host][proto][port]["name"],'product':scanner[host][proto][port]["product"],'version':scanner[host][proto][port]["version"],'extrainfo':scanner[host][proto][port]["extrainfo"],'cpe':scanner[host][proto][port]["cpe"],'script':scanner[host][proto][port]["script"]})
 					else:
-						returned_list.append("Nothing to run script against")
-						print(returned_list)
+						sitemap_ports.append({'port':port, 'portstate':scanner[host][proto][port]["state"],'portreason':scanner[host][proto][port]["reason"],'portname':scanner[host][proto][port]["name"],'product':scanner[host][proto][port]["product"],'version':scanner[host][proto][port]["version"],'extrainfo':scanner[host][proto][port]["extrainfo"],'cpe':scanner[host][proto][port]["cpe"],'noscript':"No Scripts could be run against this port."})		
+				sitemap_protocol[-1]['portlist'] = sitemap_ports
+			sitemap_host[-1]['protocollist'] = sitemap_protocol
+			
+			
+		sitemap_list.append({'uphosts': sitemap_scan["nmap"]["scanstats"]["uphosts"], 'downhosts':sitemap_scan["nmap"]["scanstats"]["downhosts"], 'totalhosts':sitemap_scan["nmap"]["scanstats"]["totalhosts"], 'hosts':sitemap_host})
+
+		
+		sitemap = json.dumps(sitemap_list)
+		print (sitemap)
