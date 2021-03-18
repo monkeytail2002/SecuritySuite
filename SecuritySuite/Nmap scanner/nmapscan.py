@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 
+#Developed by Angus MacDonald(15009351) as part of the UG409758 Team Project module for BSc Computing Science.
+#Tutor: Graeme Martindale
+#Members of team: Angus MacDonald 15009351, Jordan L 15009237, Jim
+#Version: 1.80 Date Completed and fully tested: 18/3/21
+
 import nmap
 import sys
 
@@ -19,7 +24,7 @@ ip_range = user_list[0]
 port_range = user_list[1]
 use_test = user_list[2]
 scan_type = int(use_test)
-
+#print(user_list)
 #print("Scan")
 class Scanning:
 	def __init__(self, ipaddress, ports):

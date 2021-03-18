@@ -2,10 +2,11 @@
 
 #Developed by Angus MacDonald(15009351) as part of the UG409758 Team Project module for BSc Computing Science.
 #Tutor: Graeme Martindale
-#Members of team: Angus MacDonald 15009351, Jordan L 15009237, 
-#Version: 2.10 Date Completed and fully tested: 1/3/21
+#Members of team: Angus MacDonald 15009351, Jordan L 15009237, Jim
+#Version: 2.40 Date Completed and fully tested: 18/3/21
 
 import nmap
+import json
 
 #Set the scanner for the nmap module
 scanner = nmap.PortScanner()
@@ -24,35 +25,30 @@ class Intensityzero(Scanning):
 		zero_scan = scanner.scan(self.ipaddress, self.ports, arguments='-sV --version-intensity 0')
 #		set the scan to return the host
 #		print(zero_scan)
-#       Create the empty list
-		returned_list=[]
-#    Append results to list
-		returned_list.append(zero_scan["nmap"]["scanstats"]["uphosts"])
-		returned_list.append(zero_scan["nmap"]["scanstats"]["downhosts"])
-		returned_list.append(zero_scan["nmap"]["scanstats"]["totalhosts"])
-#        Set scanned hosts in the range to a variable
+		zero_list=[]
+		zero_host=[]
+
+		#        Set scanned hosts in the range to a variable
 		hostRange = scanner.all_hosts()
 #        Iterate through a for loop to return the hosts, DNS entry and state of host
 		for host in hostRange:
-			returned_list.append(host)
-			returned_list.append(scanner[host].hostname())
-			returned_list.append(scanner[host]["status"]["state"])
+			zero_host.append({'host':host, 'hostname': scanner[host].hostname(), 'state':scanner[host]["status"]["state"],'hostreason':scanner[host]["status"]["reason"]})
+			zero_protocol=[]
 #            Iterate through a for loop to return the protocol
 			for proto in scanner[host].all_protocols():
-				returned_list.append(proto)
 				scannedPorts = scanner[host][proto].keys()
+				zero_protocol.append({'protocols':proto})
 #                Iterate through for loop for information per port
+				zero_ports=[]
 				for port in scannedPorts:
-					returned_list.append(port)
-					returned_list.append(scanner[host][proto][port]["state"])
-					returned_list.append(scanner[host][proto][port]["reason"])
-					returned_list.append(scanner[host][proto][port]["name"])
-					returned_list.append(scanner[host][proto][port]["product"])
-					returned_list.append(scanner[host][proto][port]["version"])
-					returned_list.append(scanner[host][proto][port]["extrainfo"])
-					returned_list.append(scanner[host][proto][port]["cpe"])
-#                print the list so that it can be manipulated in php
-				print(returned_list)
+					zero_ports.append({'port':port, 'portstate':scanner[host][proto][port]["state"],'portreason':scanner[host][proto][port]["reason"],'portname':scanner[host][proto][port]["name"], 'product': scanner[host][proto][port]["product"], 'version':scanner[host][proto][port]["version"], 'extrainfo': scanner[host][proto][port]["extrainfo"] , 'cpe':scanner[host][proto][port]["cpe"]})
+				zero_protocol[-1]['portlist'] = zero_ports
+			zero_host[-1]['protocollist'] = zero_protocol
+		zero_list.append({'uphosts': zero_scan["nmap"]["scanstats"]["uphosts"], 'downhosts':zero_scan["nmap"]["scanstats"]["downhosts"], 'totalhosts':zero_scan["nmap"]["scanstats"]["totalhosts"], 'hosts':zero_host})
+
+		
+		zero = json.dumps(zero_list)
+		print(zero)
 
 
 
@@ -62,35 +58,30 @@ class Intensityone(Scanning):
 #		scan the ip range and ports
 		one_scan = scanner.scan(self.ipaddress, self.ports, arguments='-sV --version-intensity 0')
 #		print(one_scan)
-#       Create the empty list
-		returned_list=[]
-#    Append results to list
-		returned_list.append(one_scan["nmap"]["scanstats"]["uphosts"])
-		returned_list.append(one_scan["nmap"]["scanstats"]["downhosts"])
-		returned_list.append(one_scan["nmap"]["scanstats"]["totalhosts"])
-#        Set scanned hosts in the range to a variable
+		one_list=[]
+		one_host=[]
+
+		#        Set scanned hosts in the range to a variable
 		hostRange = scanner.all_hosts()
 #        Iterate through a for loop to return the hosts, DNS entry and state of host
 		for host in hostRange:
-			returned_list.append(host)
-			returned_list.append(scanner[host].hostname())
-			returned_list.append(scanner[host]["status"]["state"])
+			one_host.append({'host':host, 'hostname': scanner[host].hostname(), 'state':scanner[host]["status"]["state"],'hostreason':scanner[host]["status"]["reason"]})
+			one_protocol=[]
 #            Iterate through a for loop to return the protocol
 			for proto in scanner[host].all_protocols():
-				returned_list.append(proto)
 				scannedPorts = scanner[host][proto].keys()
+				one_protocol.append({'protocols':proto})
 #                Iterate through for loop for information per port
+				one_ports=[]
 				for port in scannedPorts:
-					returned_list.append(port)
-					returned_list.append(scanner[host][proto][port]["state"])
-					returned_list.append(scanner[host][proto][port]["reason"])
-					returned_list.append(scanner[host][proto][port]["name"])
-					returned_list.append(scanner[host][proto][port]["product"])
-					returned_list.append(scanner[host][proto][port]["version"])
-					returned_list.append(scanner[host][proto][port]["extrainfo"])
-					returned_list.append(scanner[host][proto][port]["cpe"])
-#                print the list so that it can be manipulated in php
-				print(returned_list)
+					one_ports.append({'port':port, 'portstate':scanner[host][proto][port]["state"],'portreason':scanner[host][proto][port]["reason"],'portname':scanner[host][proto][port]["name"], 'product': scanner[host][proto][port]["product"], 'version':scanner[host][proto][port]["version"], 'extrainfo': scanner[host][proto][port]["extrainfo"] , 'cpe':scanner[host][proto][port]["cpe"]})
+				one_protocol[-1]['portlist'] = one_ports
+			one_host[-1]['protocollist'] = one_protocol
+		one_list.append({'uphosts': one_scan["nmap"]["scanstats"]["uphosts"], 'downhosts':one_scan["nmap"]["scanstats"]["downhosts"], 'totalhosts':one_scan["nmap"]["scanstats"]["totalhosts"], 'hosts':one_host})
+
+		
+		one = json.dumps(one_list)
+		print(one)
 
 	
 class Intensitytwo(Scanning):
@@ -99,35 +90,31 @@ class Intensitytwo(Scanning):
 #		scan the ip range and ports
 		two_scan = scanner.scan(self.ipaddress, self.ports, arguments='-sV --version-intensity 0')
 #		print(two_scan)
-#       Create the empty list
-		returned_list=[]
-#    Append results to list
-		returned_list.append(two_scan["nmap"]["scanstats"]["uphosts"])
-		returned_list.append(two_scan["nmap"]["scanstats"]["downhosts"])
-		returned_list.append(two_scan["nmap"]["scanstats"]["totalhosts"])
-#        Set scanned hosts in the range to a variable
+		two_list=[]
+		two_host=[]
+
+		#        Set scanned hosts in the range to a variable
 		hostRange = scanner.all_hosts()
 #        Iterate through a for loop to return the hosts, DNS entry and state of host
 		for host in hostRange:
-			returned_list.append(host)
-			returned_list.append(scanner[host].hostname())
-			returned_list.append(scanner[host]["status"]["state"])
+			two_host.append({'host':host, 'hostname': scanner[host].hostname(), 'state':scanner[host]["status"]["state"],'hostreason':scanner[host]["status"]["reason"]})
+			two_protocol=[]
 #            Iterate through a for loop to return the protocol
 			for proto in scanner[host].all_protocols():
-				returned_list.append(proto)
 				scannedPorts = scanner[host][proto].keys()
+				two_protocol.append({'protocols':proto})
 #                Iterate through for loop for information per port
+				two_ports=[]
 				for port in scannedPorts:
-					returned_list.append(port)
-					returned_list.append(scanner[host][proto][port]["state"])
-					returned_list.append(scanner[host][proto][port]["reason"])
-					returned_list.append(scanner[host][proto][port]["name"])
-					returned_list.append(scanner[host][proto][port]["product"])
-					returned_list.append(scanner[host][proto][port]["version"])
-					returned_list.append(scanner[host][proto][port]["extrainfo"])
-					returned_list.append(scanner[host][proto][port]["cpe"])
-#                print the list so that it can be manipulated in php
-				print(returned_list)
+					two_ports.append({'port':port, 'portstate':scanner[host][proto][port]["state"],'portreason':scanner[host][proto][port]["reason"],'portname':scanner[host][proto][port]["name"], 'product': scanner[host][proto][port]["product"], 'version':scanner[host][proto][port]["version"], 'extrainfo': scanner[host][proto][port]["extrainfo"] , 'cpe':scanner[host][proto][port]["cpe"]})
+				two_protocol[-1]['portlist'] = two_ports
+			two_host[-1]['protocollist'] = two_protocol
+		two_list.append({'uphosts': two_scan["nmap"]["scanstats"]["uphosts"], 'downhosts':two_scan["nmap"]["scanstats"]["downhosts"], 'totalhosts':two_scan["nmap"]["scanstats"]["totalhosts"], 'hosts':two_host})
+
+		
+		two = json.dumps(two_list)
+		print(two)
+
 
 	
 class Intensitythree(Scanning):
@@ -136,35 +123,31 @@ class Intensitythree(Scanning):
 #		scan the ip range and ports
 		three_scan = scanner.scan(self.ipaddress, self.ports, arguments='-sV --version-intensity 0')
 #		print(three_scan)
-#       Create the empty list
-		returned_list=[]
-#    Append results to list
-		returned_list.append(three_scan["nmap"]["scanstats"]["uphosts"])
-		returned_list.append(three_scan["nmap"]["scanstats"]["downhosts"])
-		returned_list.append(three_scan["nmap"]["scanstats"]["totalhosts"])
-#        Set scanned hosts in the range to a variable
+		three_list=[]
+		three_host=[]
+
+		#        Set scanned hosts in the range to a variable
 		hostRange = scanner.all_hosts()
 #        Iterate through a for loop to return the hosts, DNS entry and state of host
 		for host in hostRange:
-			returned_list.append(host)
-			returned_list.append(scanner[host].hostname())
-			returned_list.append(scanner[host]["status"]["state"])
+			three_host.append({'host':host, 'hostname': scanner[host].hostname(), 'state':scanner[host]["status"]["state"],'hostreason':scanner[host]["status"]["reason"]})
+			three_protocol=[]
 #            Iterate through a for loop to return the protocol
 			for proto in scanner[host].all_protocols():
-				returned_list.append(proto)
 				scannedPorts = scanner[host][proto].keys()
+				three_protocol.append({'protocols':proto})
 #                Iterate through for loop for information per port
+				three_ports=[]
 				for port in scannedPorts:
-					returned_list.append(port)
-					returned_list.append(scanner[host][proto][port]["state"])
-					returned_list.append(scanner[host][proto][port]["reason"])
-					returned_list.append(scanner[host][proto][port]["name"])
-					returned_list.append(scanner[host][proto][port]["product"])
-					returned_list.append(scanner[host][proto][port]["version"])
-					returned_list.append(scanner[host][proto][port]["extrainfo"])
-					returned_list.append(scanner[host][proto][port]["cpe"])
-#                print the list so that it can be manipulated in php
-				print(returned_list)
+					three_ports.append({'port':port, 'portstate':scanner[host][proto][port]["state"],'portreason':scanner[host][proto][port]["reason"],'portname':scanner[host][proto][port]["name"], 'product': scanner[host][proto][port]["product"], 'version':scanner[host][proto][port]["version"], 'extrainfo': scanner[host][proto][port]["extrainfo"] , 'cpe':scanner[host][proto][port]["cpe"]})
+				three_protocol[-1]['portlist'] = three_ports
+			three_host[-1]['protocollist'] = three_protocol
+		three_list.append({'uphosts': three_scan["nmap"]["scanstats"]["uphosts"], 'downhosts':three_scan["nmap"]["scanstats"]["downhosts"], 'totalhosts':three_scan["nmap"]["scanstats"]["totalhosts"], 'hosts':three_host})
+
+		
+		three = json.dumps(three_list)
+		print(three)
+
 	
 	
 	
@@ -174,35 +157,31 @@ class Intensityfour(Scanning):
 #		scan the ip range and ports
 		four_scan = scanner.scan(self.ipaddress, self.ports, arguments='-sV --version-intensity 0')
 #		print(four_scan)
-#       Create the empty list
-		returned_list=[]
-#    Append results to list
-		returned_list.append(four_scan["nmap"]["scanstats"]["uphosts"])
-		returned_list.append(four_scan["nmap"]["scanstats"]["downhosts"])
-		returned_list.append(four_scan["nmap"]["scanstats"]["totalhosts"])
-#        Set scanned hosts in the range to a variable
+		four_list=[]
+		four_host=[]
+
+		#        Set scanned hosts in the range to a variable
 		hostRange = scanner.all_hosts()
 #        Iterate through a for loop to return the hosts, DNS entry and state of host
 		for host in hostRange:
-			returned_list.append(host)
-			returned_list.append(scanner[host].hostname())
-			returned_list.append(scanner[host]["status"]["state"])
+			four_host.append({'host':host, 'hostname': scanner[host].hostname(), 'state':scanner[host]["status"]["state"],'hostreason':scanner[host]["status"]["reason"]})
+			four_protocol=[]
 #            Iterate through a for loop to return the protocol
 			for proto in scanner[host].all_protocols():
-				returned_list.append(proto)
 				scannedPorts = scanner[host][proto].keys()
+				four_protocol.append({'protocols':proto})
 #                Iterate through for loop for information per port
+				four_ports=[]
 				for port in scannedPorts:
-					returned_list.append(port)
-					returned_list.append(scanner[host][proto][port]["state"])
-					returned_list.append(scanner[host][proto][port]["reason"])
-					returned_list.append(scanner[host][proto][port]["name"])
-					returned_list.append(scanner[host][proto][port]["product"])
-					returned_list.append(scanner[host][proto][port]["version"])
-					returned_list.append(scanner[host][proto][port]["extrainfo"])
-					returned_list.append(scanner[host][proto][port]["cpe"])
-#                print the list so that it can be manipulated in php
-				print(returned_list)
+					four_ports.append({'port':port, 'portstate':scanner[host][proto][port]["state"],'portreason':scanner[host][proto][port]["reason"],'portname':scanner[host][proto][port]["name"], 'product': scanner[host][proto][port]["product"], 'version':scanner[host][proto][port]["version"], 'extrainfo': scanner[host][proto][port]["extrainfo"] , 'cpe':scanner[host][proto][port]["cpe"]})
+				four_protocol[-1]['portlist'] = four_ports
+			four_host[-1]['protocollist'] = four_protocol
+		four_list.append({'uphosts': four_scan["nmap"]["scanstats"]["uphosts"], 'downhosts':four_scan["nmap"]["scanstats"]["downhosts"], 'totalhosts':four_scan["nmap"]["scanstats"]["totalhosts"], 'hosts':four_host})
+
+		
+		four = json.dumps(four_list)
+		print(four)
+
 
 	
 class Intensityfive(Scanning):
@@ -211,35 +190,31 @@ class Intensityfive(Scanning):
 #		scan the ip range and ports
 		five_scan = scanner.scan(self.ipaddress, self.ports, arguments='-sV --version-intensity 0')
 #		print(five_scan)
-#       Create the empty list
-		returned_list=[]
-#    Append results to list
-		returned_list.append(five_scan["nmap"]["scanstats"]["uphosts"])
-		returned_list.append(five_scan["nmap"]["scanstats"]["downhosts"])
-		returned_list.append(five_scan["nmap"]["scanstats"]["totalhosts"])
-#        Set scanned hosts in the range to a variable
+		five_list=[]
+		five_host=[]
+
+		#        Set scanned hosts in the range to a variable
 		hostRange = scanner.all_hosts()
 #        Iterate through a for loop to return the hosts, DNS entry and state of host
 		for host in hostRange:
-			returned_list.append(host)
-			returned_list.append(scanner[host].hostname())
-			returned_list.append(scanner[host]["status"]["state"])
+			five_host.append({'host':host, 'hostname': scanner[host].hostname(), 'state':scanner[host]["status"]["state"],'hostreason':scanner[host]["status"]["reason"]})
+			five_protocol=[]
 #            Iterate through a for loop to return the protocol
 			for proto in scanner[host].all_protocols():
-				returned_list.append(proto)
 				scannedPorts = scanner[host][proto].keys()
+				five_protocol.append({'protocols':proto})
 #                Iterate through for loop for information per port
+				five_ports=[]
 				for port in scannedPorts:
-					returned_list.append(port)
-					returned_list.append(scanner[host][proto][port]["state"])
-					returned_list.append(scanner[host][proto][port]["reason"])
-					returned_list.append(scanner[host][proto][port]["name"])
-					returned_list.append(scanner[host][proto][port]["product"])
-					returned_list.append(scanner[host][proto][port]["version"])
-					returned_list.append(scanner[host][proto][port]["extrainfo"])
-					returned_list.append(scanner[host][proto][port]["cpe"])
-#                print the list so that it can be manipulated in php
-				print(returned_list)
+					five_ports.append({'port':port, 'portstate':scanner[host][proto][port]["state"],'portreason':scanner[host][proto][port]["reason"],'portname':scanner[host][proto][port]["name"], 'product': scanner[host][proto][port]["product"], 'version':scanner[host][proto][port]["version"], 'extrainfo': scanner[host][proto][port]["extrainfo"] , 'cpe':scanner[host][proto][port]["cpe"]})
+				five_protocol[-1]['portlist'] = five_ports
+			five_host[-1]['protocollist'] = five_protocol
+		five_list.append({'uphosts': five_scan["nmap"]["scanstats"]["uphosts"], 'downhosts':five_scan["nmap"]["scanstats"]["downhosts"], 'totalhosts':five_scan["nmap"]["scanstats"]["totalhosts"], 'hosts':five_host})
+
+		
+		five = json.dumps(five_list)
+		print(five)
+
 
 	
 	
@@ -249,35 +224,31 @@ class Intensitysix(Scanning):
 #				scan the ip range and ports
 		six_scan = scanner.scan(self.ipaddress, self.ports, arguments='-sV --version-intensity 6')
 #		print(six_scan)
-#       Create the empty list
-		returned_list=[]
-#    Append results to list
-		returned_list.append(six_scan["nmap"]["scanstats"]["uphosts"])
-		returned_list.append(six_scan["nmap"]["scanstats"]["downhosts"])
-		returned_list.append(six_scan["nmap"]["scanstats"]["totalhosts"])
-#        Set scanned hosts in the range to a variable
+		six_list=[]
+		six_host=[]
+
+		#        Set scanned hosts in the range to a variable
 		hostRange = scanner.all_hosts()
 #        Iterate through a for loop to return the hosts, DNS entry and state of host
 		for host in hostRange:
-			returned_list.append(host)
-			returned_list.append(scanner[host].hostname())
-			returned_list.append(scanner[host]["status"]["state"])
+			six_host.append({'host':host, 'hostname': scanner[host].hostname(), 'state':scanner[host]["status"]["state"],'hostreason':scanner[host]["status"]["reason"]})
+			six_protocol=[]
 #            Iterate through a for loop to return the protocol
 			for proto in scanner[host].all_protocols():
-				returned_list.append(proto)
 				scannedPorts = scanner[host][proto].keys()
+				six_protocol.append({'protocols':proto})
 #                Iterate through for loop for information per port
+				six_ports=[]
 				for port in scannedPorts:
-					returned_list.append(port)
-					returned_list.append(scanner[host][proto][port]["state"])
-					returned_list.append(scanner[host][proto][port]["reason"])
-					returned_list.append(scanner[host][proto][port]["name"])
-					returned_list.append(scanner[host][proto][port]["product"])
-					returned_list.append(scanner[host][proto][port]["version"])
-					returned_list.append(scanner[host][proto][port]["extrainfo"])
-					returned_list.append(scanner[host][proto][port]["cpe"])
-#                print the list so that it can be manipulated in php
-				print(returned_list)
+					six_ports.append({'port':port, 'portstate':scanner[host][proto][port]["state"],'portreason':scanner[host][proto][port]["reason"],'portname':scanner[host][proto][port]["name"], 'product': scanner[host][proto][port]["product"], 'version':scanner[host][proto][port]["version"], 'extrainfo': scanner[host][proto][port]["extrainfo"] , 'cpe':scanner[host][proto][port]["cpe"]})
+				six_protocol[-1]['portlist'] = six_ports
+			six_host[-1]['protocollist'] = six_protocol
+		six_list.append({'uphosts': six_scan["nmap"]["scanstats"]["uphosts"], 'downhosts':six_scan["nmap"]["scanstats"]["downhosts"], 'totalhosts':six_scan["nmap"]["scanstats"]["totalhosts"], 'hosts':six_host})
+
+		
+		six = json.dumps(six_list)
+		print(six)
+
 
 	
 	
@@ -287,35 +258,31 @@ class Intensityseven(Scanning):
 		#		scan the ip range and ports
 		seven_scan = scanner.scan(self.ipaddress, self.ports, arguments='-sV --version-intensity 7')
 #		print(seven_scan)
-#       Create the empty list
-		returned_list=[]
-#    Append results to list
-		returned_list.append(seven_scan["nmap"]["scanstats"]["uphosts"])
-		returned_list.append(seven_scan["nmap"]["scanstats"]["downhosts"])
-		returned_list.append(seven_scan["nmap"]["scanstats"]["totalhosts"])
-#        Set scanned hosts in the range to a variable
+		seven_list=[]
+		seven_host=[]
+
+		#        Set scanned hosts in the range to a variable
 		hostRange = scanner.all_hosts()
 #        Iterate through a for loop to return the hosts, DNS entry and state of host
 		for host in hostRange:
-			returned_list.append(host)
-			returned_list.append(scanner[host].hostname())
-			returned_list.append(scanner[host]["status"]["state"])
+			seven_host.append({'host':host, 'hostname': scanner[host].hostname(), 'state':scanner[host]["status"]["state"],'hostreason':scanner[host]["status"]["reason"]})
+			seven_protocol=[]
 #            Iterate through a for loop to return the protocol
 			for proto in scanner[host].all_protocols():
-				returned_list.append(proto)
 				scannedPorts = scanner[host][proto].keys()
+				seven_protocol.append({'protocols':proto})
 #                Iterate through for loop for information per port
+				seven_ports=[]
 				for port in scannedPorts:
-					returned_list.append(port)
-					returned_list.append(scanner[host][proto][port]["state"])
-					returned_list.append(scanner[host][proto][port]["reason"])
-					returned_list.append(scanner[host][proto][port]["name"])
-					returned_list.append(scanner[host][proto][port]["product"])
-					returned_list.append(scanner[host][proto][port]["version"])
-					returned_list.append(scanner[host][proto][port]["extrainfo"])
-					returned_list.append(scanner[host][proto][port]["cpe"])
-#                print the list so that it can be manipulated in php
-				print(returned_list)
+					seven_ports.append({'port':port, 'portstate':scanner[host][proto][port]["state"],'portreason':scanner[host][proto][port]["reason"],'portname':scanner[host][proto][port]["name"], 'product': scanner[host][proto][port]["product"], 'version':scanner[host][proto][port]["version"], 'extrainfo': scanner[host][proto][port]["extrainfo"] , 'cpe':scanner[host][proto][port]["cpe"]})
+				seven_protocol[-1]['portlist'] = seven_ports
+			seven_host[-1]['protocollist'] = seven_protocol
+		seven_list.append({'uphosts': seven_scan["nmap"]["scanstats"]["uphosts"], 'downhosts':seven_scan["nmap"]["scanstats"]["downhosts"], 'totalhosts':seven_scan["nmap"]["scanstats"]["totalhosts"], 'hosts':seven_host})
+
+		
+		seven = json.dumps(seven_list)
+		print(seven)
+
 
 #
 #
@@ -325,35 +292,31 @@ class Intensityeight(Scanning):
 		#		scan the ip range and ports
 		eight_scan = scanner.scan(self.ipaddress, self.ports, arguments='-sV --version-intensity 8')
 #		print(eight_scan)
-#       Create the empty list
-		returned_list=[]
-#    Append results to list
-		returned_list.append(eight_scan["nmap"]["scanstats"]["uphosts"])
-		returned_list.append(eight_scan["nmap"]["scanstats"]["downhosts"])
-		returned_list.append(eight_scan["nmap"]["scanstats"]["totalhosts"])
-#        Set scanned hosts in the range to a variable
+		eight_list=[]
+		eight_host=[]
+
+		#        Set scanned hosts in the range to a variable
 		hostRange = scanner.all_hosts()
 #        Iterate through a for loop to return the hosts, DNS entry and state of host
 		for host in hostRange:
-			returned_list.append(host)
-			returned_list.append(scanner[host].hostname())
-			returned_list.append(scanner[host]["status"]["state"])
+			eight_host.append({'host':host, 'hostname': scanner[host].hostname(), 'state':scanner[host]["status"]["state"],'hostreason':scanner[host]["status"]["reason"]})
+			eight_protocol=[]
 #            Iterate through a for loop to return the protocol
 			for proto in scanner[host].all_protocols():
-				returned_list.append(proto)
 				scannedPorts = scanner[host][proto].keys()
+				eight_protocol.append({'protocols':proto})
 #                Iterate through for loop for information per port
+				eight_ports=[]
 				for port in scannedPorts:
-					returned_list.append(port)
-					returned_list.append(scanner[host][proto][port]["state"])
-					returned_list.append(scanner[host][proto][port]["reason"])
-					returned_list.append(scanner[host][proto][port]["name"])
-					returned_list.append(scanner[host][proto][port]["product"])
-					returned_list.append(scanner[host][proto][port]["version"])
-					returned_list.append(scanner[host][proto][port]["extrainfo"])
-					returned_list.append(scanner[host][proto][port]["cpe"])
-#                print the list so that it can be manipulated in php
-				print(returned_list)
+					eight_ports.append({'port':port, 'portstate':scanner[host][proto][port]["state"],'portreason':scanner[host][proto][port]["reason"],'portname':scanner[host][proto][port]["name"], 'product': scanner[host][proto][port]["product"], 'version':scanner[host][proto][port]["version"], 'extrainfo': scanner[host][proto][port]["extrainfo"] , 'cpe':scanner[host][proto][port]["cpe"]})
+				eight_protocol[-1]['portlist'] = eight_ports
+			eight_host[-1]['protocollist'] = eight_protocol
+		eight_list.append({'uphosts': eight_scan["nmap"]["scanstats"]["uphosts"], 'downhosts':eight_scan["nmap"]["scanstats"]["downhosts"], 'totalhosts':eight_scan["nmap"]["scanstats"]["totalhosts"], 'hosts':eight_host})
+
+		
+		eight = json.dumps(eight_list)
+		print(eight)
+
 
 	
 #
@@ -363,32 +326,27 @@ class Intensitynine(Scanning):
 #		#		scan the ip range and ports
 		nine_scan = scanner.scan(self.ipaddress, self.ports, arguments='-sV --version-intensity 8')
 #		print(nine_scan)
-#       Create the empty list
-		returned_list=[]
-#    Append results to list
-		returned_list.append(nine_scan["nmap"]["scanstats"]["uphosts"])
-		returned_list.append(nine_scan["nmap"]["scanstats"]["downhosts"])
-		returned_list.append(nine_scan["nmap"]["scanstats"]["totalhosts"])
-#        Set scanned hosts in the range to a variable
+		nine_list=[]
+		nine_host=[]
+
+		#        Set scanned hosts in the range to a variable
 		hostRange = scanner.all_hosts()
 #        Iterate through a for loop to return the hosts, DNS entry and state of host
 		for host in hostRange:
-			returned_list.append(host)
-			returned_list.append(scanner[host].hostname())
-			returned_list.append(scanner[host]["status"]["state"])
+			nine_host.append({'host':host, 'hostname': scanner[host].hostname(), 'state':scanner[host]["status"]["state"],'hostreason':scanner[host]["status"]["reason"]})
+			znine_protocol=[]
 #            Iterate through a for loop to return the protocol
 			for proto in scanner[host].all_protocols():
-				returned_list.append(proto)
 				scannedPorts = scanner[host][proto].keys()
+				nine_protocol.append({'protocols':proto})
 #                Iterate through for loop for information per port
+				nine_ports=[]
 				for port in scannedPorts:
-					returned_list.append(port)
-					returned_list.append(scanner[host][proto][port]["state"])
-					returned_list.append(scanner[host][proto][port]["reason"])
-					returned_list.append(scanner[host][proto][port]["name"])
-					returned_list.append(scanner[host][proto][port]["product"])
-					returned_list.append(scanner[host][proto][port]["version"])
-					returned_list.append(scanner[host][proto][port]["extrainfo"])
-					returned_list.append(scanner[host][proto][port]["cpe"])
-#                print the list so that it can be manipulated in php
-				print(returned_list)
+					nine_ports.append({'port':port, 'portstate':scanner[host][proto][port]["state"],'portreason':scanner[host][proto][port]["reason"],'portname':scanner[host][proto][port]["name"], 'product': scanner[host][proto][port]["product"], 'version':scanner[host][proto][port]["version"], 'extrainfo': scanner[host][proto][port]["extrainfo"] , 'cpe':scanner[host][proto][port]["cpe"]})
+				nine_protocol[-1]['portlist'] = nine_ports
+			nine_host[-1]['protocollist'] = nine_protocol
+		nine_list.append({'uphosts': nine_scan["nmap"]["scanstats"]["uphosts"], 'downhosts':nine_scan["nmap"]["scanstats"]["downhosts"], 'totalhosts':nine_scan["nmap"]["scanstats"]["totalhosts"], 'hosts':nine_host})
+
+		
+		nine = json.dumps(nine_list)
+		print(nine)
