@@ -2,7 +2,7 @@
 
 #Developed by Angus MacDonald(15009351) as part of the UG409758 Team Project module for BSc Computing Science.
 #Tutor: Graeme Martindale
-#Members of team: Angus MacDonald 15009351, Jordan L 15009237, Jim
+#Members of team: Angus MacDonald 15009351, Jordan Laing 15009237, Jim Baird 10003644
 #Version: 2.30 Date Completed and fully tested: 18/3/21
 
 import nmap

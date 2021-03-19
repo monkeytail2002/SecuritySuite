@@ -2,7 +2,7 @@
 
 #Developed by Angus MacDonald(15009351) as part of the UG409758 Team Project module for BSc Computing Science.
 #Tutor: Graeme Martindale
-#Members of team: Angus MacDonald 15009351, Jordan L 15009237, Jim
+#Members of team: Angus MacDonald 15009351, Jordan Laing 15009237, Jim Baird 10003644
 #Version: 1.80 Date Completed and fully tested: 18/3/21
 
 import nmap
@@ -125,10 +125,10 @@ elif scan_type == 31:
 	nsescript.httpauth_results()
 elif scan_type == 32:
 	nsescript = nsescripts.Httpenum(ip_range, port_range)
-	nsescript.Httpenum_results()
+	nsescript.httpenum_results()
 elif scan_type == 33:
 	nsescript = nsescripts.Httpmethods(ip_range, port_range)
-	nsescript.Httpmethods_results()
+	nsescript.httpmethods_results()
 elif scan_type == 34:
 	nsescript = nsescripts.httpsitemapgenerator(ip_range, port_range)
 	nsescript.sitemap_results()
