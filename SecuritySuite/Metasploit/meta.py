@@ -2,7 +2,7 @@
 
 #Developed by Angus MacDonald(15009351) as part of the UG409758 Team Project module for BSc Computing Science.
 #Tutor: Graeme Martindale
-#Members of team: Angus MacDonald 15009351, Jordan L 15009237, Jim
+#Members of team: Angus MacDonald 15009351, Jordan Laing 15009237, Jim Baird 10003644
 #Version: 1.6 Date Completed and fully tested: 9/3/21
 
 from pymetasploit3.msfrpc import MsfRpcClient
@@ -18,7 +18,6 @@ config.read('/home/leonardo/credentials.ini')
 
 #pull in the password from the credentials file.
 con_pass = config.get("keys",'metasploit_password')
-
 #Test config pull
 #print(con_pass)
 
@@ -32,12 +31,11 @@ meta_module = user_list[0]
 meta_group = user_list[1]
 
 #Connect to Metasploit
-meta_client = MsfRpcClient(con_pass)
 
+meta_client = MsfRpcClient(con_pass)
 
 #Set the user input to a wildcard search for the filter
 search_pattern = meta_group+"*" 
-
 
 
 class Scanning:
@@ -50,11 +48,11 @@ if meta_module == "Exploits":
 	meta_info.exploit()
 elif meta_module == "Auxiliaries":
 	meta_info = metainfo.Metainfo(meta_client, search_pattern)
-	meta_info.auxiliary()
+	meta_info.auxiliaries()
 elif meta_module == "Payloads":
 	meta_info = metainfo.Metainfo(meta_client, search_pattern)
 	meta_info.payload()
-elif meta_module == "No Operations":
+elif meta_module == "Nops":
 	meta_info = metainfo.Metainfo(meta_client, search_pattern)
 	meta_info.nops()
 elif meta_module == "Encoders":
