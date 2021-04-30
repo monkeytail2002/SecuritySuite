@@ -25,7 +25,8 @@ port_range = user_list[1]
 use_test = user_list[2]
 scan_type = int(use_test)
 #print(user_list)
-#print("Scan")
+
+
 class Scanning:
 	def __init__(self, ipaddress, ports):
 		pass
@@ -130,5 +131,5 @@ elif scan_type == 33:
 	nsescript = nsescripts.Httpmethods(ip_range, port_range)
 	nsescript.httpmethods_results()
 elif scan_type == 34:
-	nsescript = nsescripts.httpsitemapgenerator(ip_range, port_range)
+	nsescript = nsescripts.Httpsitemapgenerator(ip_range, port_range)
 	nsescript.sitemap_results()

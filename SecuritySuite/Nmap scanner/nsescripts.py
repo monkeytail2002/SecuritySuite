@@ -160,7 +160,7 @@ class Httpmethods(Scanning):
 		print (methods)
 
 
-class httpsitemapgenerator(Scanning):
+class Httpsitemapgenerator(Scanning):
 	def sitemap_results(self):
 #		print ("Test sitemap")
 		sitemap_scan = scanner.scan(self.ipaddress, self.ports, arguments="--script=/home/michelangelo/NSEScripts/http-sitemap-generator.nse")

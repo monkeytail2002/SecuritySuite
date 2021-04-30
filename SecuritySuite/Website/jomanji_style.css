@@ -1,0 +1,233 @@
+body {
+	
+	font-family: Verdana;
+	margin-left: 10%;
+	margin-right: 10%;
+}
+
+h1 {
+	
+	color: #0070ad;
+}
+
+h2 {
+	
+	color: #12abdb;
+	padding: 0px;
+	margin: 0px;
+}
+
+h3, h4 {
+	
+	font-weight: bold;
+	color: #000000;
+}
+
+footer {
+	
+	background-color: #ececec;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	overflow: auto;
+}
+
+.PageHeader {
+	
+	display: block;
+	height: 130px;
+	padding: 20px;
+}
+
+.MainContents {
+	
+	display: block;
+}
+
+#companyLogo {
+	
+	max-height: 90px;
+	width: auto;
+}
+
+#accountLogo {
+	
+	max-height: 70px;
+	width: auto;
+}
+
+.HeaderLeft {
+	
+	float: left;
+}
+
+
+.HeaderRight {
+	
+	float: right;
+}
+
+.FooterElements {
+	
+	display: inline-block;
+	padding: 20px;
+}
+
+.CapButton {
+	
+	margin: auto;
+	cursor: pointer;
+	color: white;
+	background-color: #95e616;
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.SignInForm {
+	
+	margin: auto;
+	text-align: center;
+	background-color: #ececec;
+	padding: 30px;
+	border: 1px solid;
+}
+
+#signInLogo {
+	
+	max-height: 90px;
+	width: auto;
+}
+
+#signInForm {
+	
+	display: inline-block;
+}
+
+.ToolSelection {
+	
+	margin: auto;
+	width: 200px;
+	display: inline-block;
+	float: left;
+	text-align: center;
+	background-color: #ececec;
+	padding: 20px;
+	border: 1px solid;
+}
+
+.PreviousSearches {
+	
+	width: 40%;
+	height: 40%;
+	display: inline-block;
+	float: right;
+	background-color: #ececec;
+	padding: 0px;
+	border: 1px solid;
+}
+
+.RecentTable {
+	
+	overflow-y:auto;
+	height: calc(100% - 30px);
+}
+
+#recentResultsTable {
+	
+	width: calc(100% - 1px);
+}
+
+.NmapResults {
+	
+	display: inline-block;
+	margin: auto;
+	min-width: 600px;
+	text-align: left;
+	background-color: #ececec;
+	padding: 20px;
+	border: 1px solid;
+}
+
+th {
+	
+	position: sticky;
+	top: 0;
+	background-color: #ececec;
+	box-shadow: 0px 0px 0px 1px black inset;
+	padding-top: 10px;
+}
+
+td {
+	
+	text-align: center;
+	border: 1px solid;
+}
+
+table {
+	
+  border-collapse: collapse;
+}
+
+.MainOptions {
+	
+	text-align: center;
+	margin: auto;
+	width: 300px;
+	background-color: #ececec;
+	padding: 20px;
+	border: 1px solid;
+}
+
+#nmapRange {
+	
+	margin: auto;
+	width: 500px;
+	background-color: #ececec;
+	padding: 20px;
+	border: 1px solid;
+}
+
+.MetasploitItem {
+	
+	margin: auto;
+	width: 600px;
+	text-align: left;
+	background-color: #ececec;
+	padding: 20px;
+	border: 1px solid;
+}
+
+.MetaList {
+	
+	/*text-indent: 10%;*/
+	margin:0px;
+	margin-left: 10%;
+}
+
+.NmapList {
+	
+	/*text-indent: 10%;*/
+	margin:0px;
+	margin-left: 10%;
+}
+
+.PortList {
+	
+	/*text-indent: 15%;*/
+	margin:0px;
+	margin-left: 15%;
+}
+
+.AccountContainer {
+	
+	display: inline-block;
+	float: left;
+	margin: auto;
+	margin-left: 20px;
+	width: 400px;
+	text-align: left;
+	background-color: #ececec;
+	padding: 10px;
+	border: 1px solid;
+}

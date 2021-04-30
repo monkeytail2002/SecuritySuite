@@ -56,7 +56,7 @@ class Intensityone(Scanning):
 	def vone_results(self):
 #		print("test One")
 #		scan the ip range and ports
-		one_scan = scanner.scan(self.ipaddress, self.ports, arguments='-sV --version-intensity 0')
+		one_scan = scanner.scan(self.ipaddress, self.ports, arguments='-sV --version-intensity 1')
 #		print(one_scan)
 		one_list=[]
 		one_host=[]
@@ -88,7 +88,7 @@ class Intensitytwo(Scanning):
 	def vtwo_results(self):
 #		print("test Two")
 #		scan the ip range and ports
-		two_scan = scanner.scan(self.ipaddress, self.ports, arguments='-sV --version-intensity 0')
+		two_scan = scanner.scan(self.ipaddress, self.ports, arguments='-sV --version-intensity 2')
 #		print(two_scan)
 		two_list=[]
 		two_host=[]
@@ -121,7 +121,7 @@ class Intensitythree(Scanning):
 	def vthree_results(self):
 #		print("test Three")
 #		scan the ip range and ports
-		three_scan = scanner.scan(self.ipaddress, self.ports, arguments='-sV --version-intensity 0')
+		three_scan = scanner.scan(self.ipaddress, self.ports, arguments='-sV --version-intensity 3')
 #		print(three_scan)
 		three_list=[]
 		three_host=[]
@@ -155,7 +155,7 @@ class Intensityfour(Scanning):
 	def vfour_results(self):
 #		print("test Four")
 #		scan the ip range and ports
-		four_scan = scanner.scan(self.ipaddress, self.ports, arguments='-sV --version-intensity 0')
+		four_scan = scanner.scan(self.ipaddress, self.ports, arguments='-sV --version-intensity 4')
 #		print(four_scan)
 		four_list=[]
 		four_host=[]
@@ -188,7 +188,7 @@ class Intensityfive(Scanning):
 	def vfive_results(self):
 #		print("test Five")
 #		scan the ip range and ports
-		five_scan = scanner.scan(self.ipaddress, self.ports, arguments='-sV --version-intensity 0')
+		five_scan = scanner.scan(self.ipaddress, self.ports, arguments='-sV --version-intensity 5')
 #		print(five_scan)
 		five_list=[]
 		five_host=[]
@@ -324,7 +324,7 @@ class Intensitynine(Scanning):
 	def vnine_results(self):
 #		print("test nine")
 #		#		scan the ip range and ports
-		nine_scan = scanner.scan(self.ipaddress, self.ports, arguments='-sV --version-intensity 8')
+		nine_scan = scanner.scan(self.ipaddress, self.ports, arguments='-sV --version-all')
 #		print(nine_scan)
 		nine_list=[]
 		nine_host=[]
@@ -334,7 +334,7 @@ class Intensitynine(Scanning):
 #        Iterate through a for loop to return the hosts, DNS entry and state of host
 		for host in hostRange:
 			nine_host.append({'host':host, 'hostname': scanner[host].hostname(), 'state':scanner[host]["status"]["state"],'hostreason':scanner[host]["status"]["reason"]})
-			znine_protocol=[]
+			nine_protocol=[]
 #            Iterate through a for loop to return the protocol
 			for proto in scanner[host].all_protocols():
 				scannedPorts = scanner[host][proto].keys()
@@ -347,6 +347,5 @@ class Intensitynine(Scanning):
 			nine_host[-1]['protocollist'] = nine_protocol
 		nine_list.append({'uphosts': nine_scan["nmap"]["scanstats"]["uphosts"], 'downhosts':nine_scan["nmap"]["scanstats"]["downhosts"], 'totalhosts':nine_scan["nmap"]["scanstats"]["totalhosts"], 'hosts':nine_host})
 
-		
 		nine = json.dumps(nine_list)
 		print(nine)

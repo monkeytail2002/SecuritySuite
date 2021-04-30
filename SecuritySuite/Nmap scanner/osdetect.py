@@ -62,7 +62,7 @@ class Limitedos(Scanning):
 class Guessos(Scanning):
 	def guess_results(self):
 #		print("Guess")
-		guess_scan = scanner.scan(self.ipaddress, arguments='-O -v --osscan-limit')
+		guess_scan = scanner.scan(self.ipaddress, arguments='-O -v --osscan-guess')
 #		print(guess_scan)
 		guess_list=[]
 		guess_host=[]
@@ -104,7 +104,7 @@ class Guessos(Scanning):
 class Maxoneos(Scanning):
 	def maxone_results(self):
 #		print("Max one")
-		maxone_scan = scanner.scan(self.ipaddress, arguments='-O -v --osscan-limit')
+		maxone_scan = scanner.scan(self.ipaddress, arguments='-O -v --max-os-tries 1')
 #		print(maxone_scan)
 		maxone_list=[]
 		maxone_host=[]
@@ -147,7 +147,7 @@ class Maxoneos(Scanning):
 class Maxtwoos(Scanning):
 	def maxtwo_results(self):
 #		print("Max two")
-		maxtwo_scan = scanner.scan(self.ipaddress, arguments='-O -v --osscan-limit')
+		maxtwo_scan = scanner.scan(self.ipaddress, arguments='-O -v --max-os-tries 2')
 #		print(maxtwo_scan)
 		maxtwo_list=[]
 		maxtwo_host=[]
@@ -189,7 +189,7 @@ class Maxtwoos(Scanning):
 class Maxthreeos(Scanning):
 	def maxthree_results(self):
 #		print("Max three")
-		maxthree_scan = scanner.scan(self.ipaddress, arguments='-O -v --osscan-limit')
+		maxthree_scan = scanner.scan(self.ipaddress, arguments='-O -v --max-os-tries 3')
 #		print(maxthree_scan)
 		maxthree_list=[]
 		maxthree_host=[]
@@ -231,7 +231,7 @@ class Maxthreeos(Scanning):
 class Maxfouros(Scanning):
 	def maxfour_results(self):
 #		print("Max four")
-		maxfour_scan = scanner.scan(self.ipaddress, arguments='-O -v --osscan-limit')
+		maxfour_scan = scanner.scan(self.ipaddress, arguments='-O -v --max-os-tries 4')
 #		print(maxfour_scan)
 		maxfour_list=[]
 		maxfour_host=[]
@@ -273,7 +273,7 @@ class Maxfouros(Scanning):
 class Maxfiveos(Scanning):
 	def maxfive_results(self):
 #		print("Max five")
-		maxfive_scan = scanner.scan(self.ipaddress, arguments='-O -v --osscan-limit')
+		maxfive_scan = scanner.scan(self.ipaddress, arguments='-O -v --osscan-limit --max-os-tries 5')
 #		print(maxfive_scan)
 		maxfive_list=[]
 		maxfive_host=[]

@@ -124,8 +124,6 @@ class Nullscan(Scanning):
 #		print(null_scan)
 		null_list=[]
 		null_host=[]
-		null_protocol=[]
-		null_ports=[]
 		#        Set scanned hosts in the range to a variable
 		hostRange = scanner.all_hosts()
 #        Iterate through a for loop to return the hosts, DNS entry and state of host
